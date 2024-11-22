@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import bcrypt from 'bcryptjs'
 
 const supabase = createClient(
-  process.env.LSF_POSTGRES_URL,
+  process.env.LSF_SUPABASE_URL,
   process.env.LSF_NEXT_PUBLIC_SUPABASE_ANON_KEY
 )
 
