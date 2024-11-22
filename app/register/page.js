@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function Register() {
   const [username, setUsername] = useState('')
@@ -7,7 +8,7 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
-
+  const router = useRouter()
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -25,7 +26,7 @@ export default function Register() {
     setLoading(false)
 
     if (res.ok) {
-      // Redirect to login or home page
+      router.push('/')
       console.log('User registered:', data)
     } else {
       setError(data.error)
