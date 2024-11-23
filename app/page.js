@@ -1,5 +1,5 @@
 import Link from 'next/link';
-
+import LogoutButton from './components/LogoutButton'; // Adjust the path if needed
 export default function HomePage() {
   return (
     <div>
@@ -9,6 +9,11 @@ export default function HomePage() {
         
           Start Taking Photos
       </Link>
+
+      <div>
+      <h1>logout</h1>
+      <LogoutButton />
+    </div>
     </div>
   );
 }
