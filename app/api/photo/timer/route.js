@@ -14,44 +14,53 @@ export async function POST(req) {
 
     const uploadedImages = [];
     const imagePaths = [];
+    const batchSize = 5; // Set the batch size to 5 images per batch
 
-    for (const base64Image of images) {
-      const imageName = `${letter}/${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
+    for (let i = 0; i < images.length; i += batchSize) {
+      const batch = images.slice(i, i + batchSize); // Get a batch of images
 
-      const { data, error } = await supabase.storage
-        .from('uploads')
-        .upload(imageName, Buffer.from(base64Image.split(',')[1], 'base64'), {
-          contentType: 'image/jpeg',
-        });
+      // Upload the images in this batch
+      for (const base64Image of batch) {
+        const imageName = `${letter}/${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
 
-      if (error) {
-        console.error('Error uploading image:', error);
-        continue;
+        const { data, error } = await supabase.storage
+          .from('uploads')
+          .upload(imageName, Buffer.from(base64Image.split(',')[1], 'base64'), {
+            contentType: 'image/jpeg',
+          });
+
+        if (error) {
+          console.error('Error uploading image:', error);
+          continue;
+        }
+
+        imagePaths.push(data.path);
       }
 
-      imagePaths.push(data.path);
-    }
+      // Insert metadata for this batch
+      const { data: insertData, error: insertError } = await supabase
+        .from('photo')
+        .insert([
+          {
+            user_id: userId,
+            letter,
+            image_paths: imagePaths,
+            created_at: new Date().toISOString(),
+          },
+        ]);
 
-    const { data: insertData, error: insertError } = await supabase
-      .from('photo')
-      .insert([
-        {
-          user_id: userId,
-          letter,
-          image_paths: imagePaths,
-          created_at: new Date().toISOString(),
-        },
-      ]);
+      if (insertError) {
+        console.error('Error saving metadata:', insertError);
+        return NextResponse.json({ error: 'Error saving metadata' }, { status: 500 });
+      }
 
-    if (insertError) {
-      console.error('Error saving metadata:', insertError);
-      return NextResponse.json({ error: 'Error saving metadata' }, { status: 500 });
+      uploadedImages.push(insertData);
     }
 
     return NextResponse.json({
       success: true,
       message: 'Images saved and metadata stored!',
-      data: insertData,
+      data: uploadedImages,
     });
   } catch (error) {
     console.error(error);
