@@ -1,14 +1,25 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Webcam from 'react-webcam';
+import { useSession } from 'next-auth/react';
 
 export default function TakePhoto() {
   const webcamRef = useRef(null);
   const [uploading, setUploading] = useState(false);
+  const [letter, setLetter] = useState('');
+  const { data: session } = useSession();
 
   const captureImages = async () => {
-    if (!webcamRef.current) return;
+    if (!webcamRef.current || !letter) {
+      alert('Please select a letter before capturing images.');
+      return;
+    }
+
+    if (!session) {
+      alert('Please log in to capture images.');
+      return;
+    }
 
     const capturedImages = [];
     const captureInterval = 500; // 0.5 seconds
@@ -20,18 +31,33 @@ export default function TakePhoto() {
       await new Promise((resolve) => setTimeout(resolve, captureInterval));
     }
 
-    // Upload the images
+    if (!capturedImages.length || !letter || !session.user.id) {
+      alert('Missing required fields.');
+      return;
+    }
+
     setUploading(true);
     try {
       const response = await fetch('/api/photo/timer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ images: capturedImages }),
+        body: JSON.stringify({
+          images: capturedImages,
+          letter,
+          userId: session.user.id,
+        }),
       });
       const result = await response.json();
+
+      if (result.success) {
+        alert(`Successfully uploaded ${capturedImages.length} images for letter "${letter}".`);
+      } else {
+        alert('Failed to upload images.');
+      }
       console.log(result);
     } catch (error) {
       console.error('Upload failed:', error);
+      alert('An error occurred during upload.');
     } finally {
       setUploading(false);
     }
@@ -39,6 +65,22 @@ export default function TakePhoto() {
 
   return (
     <div className="take-photo-page">
+      <h1>Capture Images for LSF Dataset</h1>
+      <div className="letter-selection">
+        <label htmlFor="letter">Select Letter: </label>
+        <select
+          id="letter"
+          value={letter}
+          onChange={(e) => setLetter(e.target.value)}
+        >
+          <option value="">--Select--</option>
+          {[...'abcdefghijklmnopqrstuvwxyz'].map((char) => (
+            <option key={char} value={char}>
+              {char.toUpperCase()}
+            </option>
+          ))}
+        </select>
+      </div>
       <Webcam
         ref={webcamRef}
         audio={false}
@@ -47,7 +89,7 @@ export default function TakePhoto() {
       />
       <button
         onClick={captureImages}
-        disabled={uploading}
+        disabled={uploading || !letter || !session}
         className="capture-button"
       >
         {uploading ? 'Uploading...' : 'Capture'}

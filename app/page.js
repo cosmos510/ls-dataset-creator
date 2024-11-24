@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import LogoutButton from './components/LogoutButton'; // Adjust the path if needed
+import LogoutButton from './components/LogoutButton';
 export default function HomePage() {
   return (
     <div>
