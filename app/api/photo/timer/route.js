@@ -12,14 +12,12 @@ export async function POST(req) {
       );
     }
 
-    const uploadedImages = [];
     const imagePaths = [];
-    const batchSize = 5; // Set the batch size to 5 images per batch
+    const batchSize = 5;
 
     for (let i = 0; i < images.length; i += batchSize) {
-      const batch = images.slice(i, i + batchSize); // Get a batch of images
+      const batch = images.slice(i, i + batchSize);
 
-      // Upload the images in this batch
       for (const base64Image of batch) {
         const imageName = `${letter}/${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
 
@@ -37,8 +35,6 @@ export async function POST(req) {
         imagePaths.push(data.path);
       }
 
-      // Insert metadata for this batch
-      /*
       const { data: insertData, error: insertError } = await supabase
         .from('photo')
         .insert([
@@ -54,14 +50,12 @@ export async function POST(req) {
         console.error('Error saving metadata:', insertError);
         return NextResponse.json({ error: 'Error saving metadata' }, { status: 500 });
       }
-
-      uploadedImages.push(insertData);*/
     }
 
     return NextResponse.json({
       success: true,
       message: 'Images saved and metadata stored!',
-      data: uploadedImages,
+      data: imagePaths,
     });
   } catch (error) {
     console.error(error);

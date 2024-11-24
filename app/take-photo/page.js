@@ -22,8 +22,8 @@ export default function TakePhoto() {
     }
 
     const capturedImages = [];
-    const captureInterval = 1000; // 1 second interval
-    const duration = 10000; // 10 seconds
+    const captureInterval = 1000;
+    const duration = 10000;
     const totalCaptures = duration / captureInterval;
 
     for (let i = 0; i < totalCaptures; i++) {
@@ -38,7 +38,6 @@ export default function TakePhoto() {
 
     setUploading(true);
 
-    // Break the images into batches of 5
     const batchSize = 5;
     const totalBatches = Math.ceil(capturedImages.length / batchSize);
 
