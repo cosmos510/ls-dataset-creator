@@ -22,7 +22,7 @@ export default function TakePhoto() {
     }
 
     const capturedImages = [];
-    const captureInterval = 1000; // 0.5 seconds
+    const captureInterval = 1000; // 1 second interval
     const duration = 10000; // 10 seconds
     const totalCaptures = duration / captureInterval;
 
@@ -37,24 +37,34 @@ export default function TakePhoto() {
     }
 
     setUploading(true);
-    try {
-      const response = await fetch('/api/photo/timer', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          images: capturedImages,
-          letter,
-          userId: session.user.id,
-        }),
-      });
-      const result = await response.json();
 
-      if (result.success) {
-        alert(`Successfully uploaded ${capturedImages.length} images for letter "${letter}".`);
-      } else {
-        alert('Failed to upload images.');
+    // Break the images into batches of 5
+    const batchSize = 5;
+    const totalBatches = Math.ceil(capturedImages.length / batchSize);
+
+    try {
+      for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
+        const batch = capturedImages.slice(batchIndex * batchSize, (batchIndex + 1) * batchSize);
+
+        const response = await fetch('/api/photo/timer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            images: batch,
+            letter,
+            userId: session.user.id,
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          alert(`Successfully uploaded batch ${batchIndex + 1} of ${totalBatches} images for letter "${letter}".`);
+        } else {
+          alert('Failed to upload images.');
+          break;
+        }
       }
-      console.log(result);
     } catch (error) {
       console.error('Upload failed:', error);
       alert('An error occurred during upload.');
