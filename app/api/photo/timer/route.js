@@ -38,7 +38,7 @@ export async function POST(req) {
       }
 
       // Insert metadata for this batch
-      /*
+      
       const { data: insertData, error: insertError } = await supabase
         .from('photo')
         .insert([
@@ -55,7 +55,7 @@ export async function POST(req) {
         return NextResponse.json({ error: 'Error saving metadata' }, { status: 500 });
       }
 
-      uploadedImages.push(insertData);*/
+      uploadedImages.push(insertData);
     }
 
     return NextResponse.json({

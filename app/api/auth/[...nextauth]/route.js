@@ -50,6 +50,16 @@ export const authOptions = {
       return session;
     },
   },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',  
+        secure: process.env.NODE_ENV === 'production',
+      },
+    },
+  },
   secret: process.env.JWT_SECRET,
 };
 
