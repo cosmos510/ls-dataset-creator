@@ -22,7 +22,7 @@ export default function TakePhoto() {
     }
 
     const capturedImages = [];
-    const captureInterval = 500; // 0.5 seconds
+    const captureInterval = 1000; // 0.5 seconds
     const duration = 10000; // 10 seconds
     const totalCaptures = duration / captureInterval;
 
