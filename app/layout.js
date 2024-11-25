@@ -16,14 +16,21 @@ const geistMono = localFont({
 
 export const metadata = {
   title: "LSF-dataset",
-  description: "build the LSF dataset together",
+  description: "Build the LSF dataset together",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ClientSessionWrapper>{children}</ClientSessionWrapper> {/* Wrap the children */}
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+      >
+        <ClientSessionWrapper>
+          <main className="flex-grow">{children}</main> {/* Main content */}
+          <footer className="text-center py-6 mt-auto text-lg text-gray-700">
+          <p>© 2024 LSF Dataset. All rights reserved.</p>
+          </footer>
+        </ClientSessionWrapper>
         <SpeedInsights />
       </body>
     </html>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { useSession } from 'next-auth/react';
 
@@ -8,6 +8,7 @@ export default function TakePhoto() {
   const webcamRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [letter, setLetter] = useState('');
+  const [progress, setProgress] = useState(0);
   const { data: session } = useSession();
 
   const captureImages = async () => {
@@ -37,7 +38,6 @@ export default function TakePhoto() {
     }
 
     setUploading(true);
-
     const batchSize = 5;
     const totalBatches = Math.ceil(capturedImages.length / batchSize);
 
@@ -58,6 +58,7 @@ export default function TakePhoto() {
         const result = await response.json();
 
         if (result.success) {
+          setProgress(((batchIndex + 1) / totalBatches) * 100);
           alert(`Successfully uploaded batch ${batchIndex + 1} of ${totalBatches} images for letter "${letter}".`);
         } else {
           alert('Failed to upload images.');
@@ -73,14 +74,16 @@ export default function TakePhoto() {
   };
 
   return (
-    <div className="take-photo-page">
-      <h1>Capture Images for LSF Dataset</h1>
-      <div className="letter-selection">
-        <label htmlFor="letter">Select Letter: </label>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-500 to-purple-700 text-white p-4">
+      <h1 className="text-4xl font-bold mb-6 text-center">Capture Images for LSF Dataset</h1>
+
+      <div className="letter-selection mb-6">
+        <label htmlFor="letter" className="text-lg font-semibold">Select Letter: </label>
         <select
           id="letter"
           value={letter}
           onChange={(e) => setLetter(e.target.value)}
+          className="mt-2 p-2 rounded-lg border border-gray-300"
         >
           <option value="">--Select--</option>
           {[...'abcdefghijklmnopqrstuvwxyz'].map((char) => (
@@ -90,19 +93,32 @@ export default function TakePhoto() {
           ))}
         </select>
       </div>
+
       <Webcam
         ref={webcamRef}
         audio={false}
         screenshotFormat="image/jpeg"
-        className="webcam-view"
+        className="webcam-view mb-6 border-4 border-white rounded-lg"
       />
+
       <button
         onClick={captureImages}
         disabled={uploading || !letter || !session}
-        className="capture-button"
+        className="bg-blue-600 text-white py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition-all mb-6"
       >
         {uploading ? 'Uploading...' : 'Capture'}
       </button>
+
+      {uploading && (
+        <div className="progress-container w-full max-w-lg mt-4 mb-6">
+          <div className="progress-bar h-3 bg-gray-300 rounded-full">
+            <div
+              className="progress-bar-filled bg-green-500 h-full rounded-full"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
