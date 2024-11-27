@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from 'bcryptjs';
 import supabase from '../../../lib/supabase';
 
@@ -27,6 +28,10 @@ export const authOptions = {
         return { id: data.id, email: data.email };
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
   ],
   pages: {
     signIn: "/login",
@@ -37,13 +42,47 @@ export const authOptions = {
     jwt: true,
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id;
-        token.email = user.email;
+        token.id = user.id || token.id;
+        token.email = user.email || token.email;
       }
+      if (account?.provider === "google") {
+        token.id = account.id;
+        token.email = user.email;
+        const { data, error } = await supabase
+          .from("users")
+          .select("*")
+          .eq("email", user.email)
+          .single();
+        if (error || !data) {
+          try {
+            const { data: newUser, error: insertError } = await supabase
+              .from("users")
+              .insert({
+                email: user.email,
+                username: user.name || user.email.split('@')[0],
+                google_id: account.id,
+                password: null,
+              })
+              .single();
+
+            if (insertError) {
+              console.error('Error saving Google user to the database:', insertError);
+            } else {
+              token.id = newUser.id;
+            }
+          } catch (err) {
+            console.error('Error saving Google user to the database:', err);
+          }
+        } else {
+          token.id = data.id;
+        }
+      }
+
       return token;
     },
+
     async session({ session, token }) {
       session.user.id = token.id;
       session.user.email = token.email;

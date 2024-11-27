@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import "./globals.css";
 import ClientSessionWrapper from './components/ClientSessionWrapper';
+import CookieConsent from './components/CookieConsent';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -21,17 +22,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
         <ClientSessionWrapper>
           <main className="flex-grow">{children}</main> {/* Main content */}
           <footer className="text-center py-6 mt-auto text-lg text-gray-700">
-          <p>© 2024 LSF Dataset. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} LSF Dataset. All rights reserved.
+              <a href="/privacy" style={{ color: "#0070f3", textDecoration: "underline" }}>
+                Politique de Confidentialité
+              </a>
+            </p>
           </footer>
         </ClientSessionWrapper>
         <SpeedInsights />
+        <CookieConsent />
       </body>
     </html>
   );
