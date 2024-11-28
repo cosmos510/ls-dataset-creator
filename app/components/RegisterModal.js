@@ -16,11 +16,11 @@ export default function RegisterModal({ isOpen, onClose }) {
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
     if (password.length < minLength) {
-      return "Password must be at least 8 characters long.";
+      return "Le mot de passe doit comporter au moins 8 caractères.";
     }
 
     if (!specialCharRegex.test(password)) {
-      return "Password must contain at least one special character.";
+      return "Le mot de passe doit contenir au moins un caractère spécial.";
     }
 
     return null;
@@ -57,7 +57,11 @@ export default function RegisterModal({ isOpen, onClose }) {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || 'Something went wrong');
+        if (data.error && data.error.includes("duplicate key value violates unique constraint")) {
+          setError("Cet utilisateur existe déjà.");
+        } else {
+          setError(data.error || 'Une erreur s\'est produite.');
+        }
         setLoading(false);
         return;
       }
@@ -67,7 +71,7 @@ export default function RegisterModal({ isOpen, onClose }) {
       clearForm();
       onClose();
     } catch (err) {
-      setError('Something went wrong');
+      setError('Une erreur s\'est produite.');
       setLoading(false);
     }
   };
@@ -84,7 +88,11 @@ export default function RegisterModal({ isOpen, onClose }) {
       });
 
       if (res.error) {
-        setError(res.error);
+        if (res.error === 'CredentialsSignin') {
+          setError('Email ou mot de passe incorrect.');
+        } else {
+          setError(res.error || 'Une erreur s\'est produite.');
+        }
         setLoading(false);
         return;
       }
@@ -93,7 +101,7 @@ export default function RegisterModal({ isOpen, onClose }) {
       clearForm(); 
       onClose();
     } catch (err) {
-      setError('Something went wrong');
+      setError('Une erreur s\'est produite.');
       setLoading(false);
     }
   };
@@ -124,18 +132,18 @@ export default function RegisterModal({ isOpen, onClose }) {
             onClick={() => setIsLogin(false)}
             className={`mr-4 px-4 py-2 rounded-md text-lg ${!isLogin ? 'bg-indigo-600 text-white' : 'text-indigo-600'}`}
           >
-            Sign up
+            S'inscrire
           </button>
           <button
             onClick={() => setIsLogin(true)}
             className={`px-4 py-2 rounded-md text-lg ${isLogin ? 'bg-indigo-600 text-white' : 'text-indigo-600'}`}
           >
-            Sign In
+            Se connecter
           </button>
         </div>
 
         <h2 className="text-4xl font-extrabold mb-4 text-center text-gray-900"> 
-          {isLogin ? 'Sign In' : 'Sign up'}
+          {isLogin ? 'Se connecter' : 'S\'inscrire'}
         </h2>
 
         {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
@@ -143,7 +151,7 @@ export default function RegisterModal({ isOpen, onClose }) {
         <form onSubmit={isLogin ? onLogin : onRegister} autoComplete="off">
           {!isLogin && (
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-semibold mb-2">Username</label>
+              <label className="block text-gray-700 text-sm font-semibold mb-2">Nom d'utilisateur</label>
               <input
                 type="text"
                 value={username}
@@ -156,7 +164,7 @@ export default function RegisterModal({ isOpen, onClose }) {
           )}
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+            <label className="block text-gray-700 text-sm font-semibold mb-2">Adresse e-mail</label>
             <input
               type="email"
               value={email}
@@ -168,7 +176,7 @@ export default function RegisterModal({ isOpen, onClose }) {
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">Password</label>
+            <label className="block text-gray-700 text-sm font-semibold mb-2">Mot de passe</label>
             <input
               type="password"
               value={password}
@@ -184,18 +192,17 @@ export default function RegisterModal({ isOpen, onClose }) {
             disabled={loading}
             className={`w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 focus:outline-none transition ${loading ? 'opacity-50' : ''}`}
           >
-            {loading ? (isLogin ? 'Signing In...' : 'Registering...') : (isLogin ? 'Sign In' : 'Register')}
+            {loading ? (isLogin ? 'Connexion en cours...' : 'Enregistrement en cours...') : (isLogin ? 'Se connecter' : 'S\'inscrire')}
           </button>
         </form>
 
-        {/* Google Sign-In */}
+        {/* Connexion avec Google */}
         <div className="text-center mt-4">
           <button
             onClick={() => signIn("google")}
             className="flex items-center justify-center w-full bg-white text-indigo-600 border border-indigo-600 py-2 rounded-md hover:bg-indigo-50 focus:outline-none transition"
           >
-            
-            Sign in with Google
+            Se connecter avec Google
           </button>
         </div>
       </div>

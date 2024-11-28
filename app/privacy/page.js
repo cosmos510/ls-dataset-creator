@@ -2,14 +2,14 @@ import React from "react";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white px-4">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white px-4 ">
       {/* Header Section */}
       <header className="flex justify-between items-center py-4 px-6">
         <h1 className="text-xl font-bold">Politique de Confidentialité</h1>
       </header>
 
       {/* Main Content */}
-      <main className="flex flex-col items-center justify-center text-center flex-grow">
+      <main className="flex flex-col items-center justify-center text-center flex-grow mb-20">
         <h1 className="text-4xl font-bold tracking-tight mb-6">
           Politique de Confidentialité
         </h1>

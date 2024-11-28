@@ -14,10 +14,6 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-const buttonVariants = {
-  hover: { scale: 1.05, boxShadow: "0px 5px 20px rgba(0, 0, 0, 0.2)" },
-};
-
 const descriptionVariants = {
   hidden: {
     opacity: 0,
@@ -124,7 +120,6 @@ export default function HomePage() {
 
   return (
     <motion.div
-      className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white px-4"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -223,36 +218,36 @@ export default function HomePage() {
   
       {/* Nouvelle section : Partagez cette initiative */}
       <motion.section
-  className="flex flex-col items-center justify-center text-center py-12 text-white"
-  variants={descriptionVariants}
-  initial="hidden"
-  animate={showDescription ? "visible" : "hidden"}
-  style={{ minHeight: "80vh" }}
->
-  <h2 className="text-3xl font-semibold mb-6">
-    Partagez cette initiative
-  </h2>
-  <div className="max-w-3xl mx-auto text-lg text-gray-200 mb-8">
-    <p className="mb-4">
-      Vous avez rejoint l'initiative, maintenant, faites découvrir ce projet
-      à vos amis et à votre famille. Plus nous serons nombreux, plus notre IA
-      pourra apprendre rapidement à reconnaître les lettres signées et
-      améliorer l'inclusion pour les personnes sourdes et malentendantes.
-    </p>
-    <p className="mb-3">
-      N'hésitez pas à partager ce site avec vos proches et sur vos réseaux sociaux pour
-      soutenir la cause.
-    </p>
-  </div>
-  <div className="mt-1">
-    <button
-      onClick={openRegisterModal} 
-      className="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full"
-    >
-      Rejoindre l'initiative
-    </button>
-  </div>
-</motion.section>
+        className="flex flex-col items-center justify-center text-center py-12 text-white"
+        variants={descriptionVariants}
+        initial="hidden"
+        animate={showDescription ? "visible" : "hidden"}
+        style={{ minHeight: "80vh" }}
+      >
+        <h2 className="text-3xl font-semibold mb-6">
+          Partagez cette initiative
+        </h2>
+        <div className="max-w-3xl mx-auto text-lg text-gray-200 mb-8">
+          <p className="mb-4">
+            Vous avez rejoint l'initiative, maintenant, faites découvrir ce projet
+            à vos amis et à votre famille. Plus nous serons nombreux, plus notre IA
+            pourra apprendre rapidement à reconnaître les lettres signées et
+            améliorer l'inclusion pour les personnes sourdes et malentendantes.
+          </p>
+          <p className="mb-3">
+            N'hésitez pas à partager ce site avec vos proches et sur vos réseaux sociaux pour
+            soutenir la cause.
+          </p>
+        </div>
+        <div className="mt-1">
+          <button
+            onClick={openRegisterModal} 
+            className="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full"
+          >
+            Rejoindre l'initiative
+          </button>
+        </div>
+      </motion.section>
   
       {/* Section des barres de progression */}
       <motion.section className="text-center py-12 mb-20">
@@ -265,7 +260,7 @@ export default function HomePage() {
             .sort((a, b) => b.count - a.count)
             .slice(0, isExpanded ? letterCounts.length : 5)
             .map(({ letter, count }) => {
-              const target = 100;
+              const target = 1000;
               const progress = Math.min((count / target) * 100, 100);
   
               const progressColor =
@@ -316,6 +311,50 @@ export default function HomePage() {
           >
             {isExpanded ? "Réduire" : "Voir tout"}
           </button>
+        </div>
+      </motion.section>
+
+      <motion.section
+        className="flex flex-col items-center justify-center text-center py-12 text-white"
+        variants={descriptionVariants}
+        initial="hidden"
+        animate={showDescription ? "visible" : "hidden"}
+        style={{ minHeight: "80vh" }}
+      >
+        <h2 className="text-3xl font-semibold mb-6">À propos de moi</h2>
+        
+        <div className="max-w-3xl mx-auto text-lg text-gray-200 mb-8">
+          <p className="mb-6">
+            Je suis Martin Maxime, et mon parcours m’a conduit à m’investir dans un projet qui allie mes passions pour la technologie et l’inclusion. Je cherche à mettre mes compétences au service d’une cause qui me tient à cœur : améliorer la communication pour les personnes sourdes et malentendantes.
+          </p>
+          <p className="mb-6">
+            Mon objectif avec ce projet est de développer des solutions technologiques innovantes qui rendent l’accès à la Langue des Signes Française (LSF) plus facile et plus accessible. Ce n’est qu’un début, mais je suis déterminé à construire quelque chose qui puisse avoir un impact durable sur l’inclusion dans notre société.
+          </p>
+          <p className="mb-6">
+            Je crois fermement que c’est en collaborant et en unissant nos efforts que nous pouvons créer des changements significatifs. Si vous souhaitez en savoir plus sur le projet ou rejoindre cette aventure, je vous invite à me contacter et à découvrir comment vous pouvez participer.
+          </p>
+          
+          <div className="mt-6 text-lg">
+            <p className="font-semibold mb-2">Me contacter :</p>
+            <div className="flex flex-col items-center space-y-4">
+              <a
+                href="https://www.linkedin.com/in/maxime-martin-090731aa/"
+                className="w-56 text-center py-1 px-4 bg-indigo-500 text-white font-medium rounded-md hover:bg-indigo-600 transition-all duration-200"
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <span className="mr-2">🔗</span>
+                <span>LinkedIn</span>
+              </a>
+              <a
+                href="mailto:maximemartin510@gmail.com"
+                className="w-56 text-center py-1 px-4 bg-indigo-500 text-white font-medium rounded-md hover:bg-indigo-600 transition-all duration-200"
+              >
+                <span className="mr-2">📧</span>
+                <span>Envoyer un Email</span>
+              </a>
+            </div>
+          </div>
         </div>
       </motion.section>
   
