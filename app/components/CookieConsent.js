@@ -27,7 +27,7 @@ const CookieConsent = () => {
       </p>
       <button
         onClick={handleAccept}
-        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+        className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
       >
         Accepter
       </button>

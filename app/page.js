@@ -128,7 +128,7 @@ export default function HomePage() {
       <motion.div
         className="flex flex-col flex-grow items-center justify-center text-center"
         variants={itemVariants}
-        style={{ minHeight: "50vh", marginTop: "200px" }}
+        style={{ minHeight: "50vh", marginTop: "200px"}}
       >
         <h1 className="text-5xl font-extrabold tracking-tight mb-6">
           Créez le jeu de données LSF
@@ -238,14 +238,6 @@ export default function HomePage() {
             N'hésitez pas à partager ce site avec vos proches et sur vos réseaux sociaux pour
             soutenir la cause.
           </p>
-        </div>
-        <div className="mt-1">
-          <button
-            onClick={openRegisterModal} 
-            className="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full"
-          >
-            Rejoindre l'initiative
-          </button>
         </div>
       </motion.section>
   

@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Webcam from "react-webcam";
 import { useSession } from "next-auth/react";
 import TutorialModal from "../components/TutorialModal";
+import RegisterModal from "../components/RegisterModal";
 
-// Animation Variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.6, staggerChildren: 0.2 } },
@@ -26,36 +26,79 @@ export default function TakePhoto() {
   const [uploading, setUploading] = useState(false);
   const [letter, setLetter] = useState("");
   const [progress, setProgress] = useState(0);
+  const [countdown, setCountdown] = useState(10);
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      setIsRegisterModalOpen(true);
+    }
+  }, [status]);
+
+  useEffect(() => {
+    let timer;
+    if (countdown > 0 && uploading) {
+      timer = setInterval(() => setCountdown((prev) => prev - 1), 1000);
+    }
+    return () => clearInterval(timer);
+  }, [countdown, uploading]);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "unauthenticated") {
+    return (
+      <RegisterModal
+        isOpen={isRegisterModalOpen}
+        onClose={() => setIsRegisterModalOpen(false)}
+      />
+    );
+  }
+
+  const handleCaptureClick = () => {
+    if (letter === "") {
+      alert("Veuillez sélectionner une lettre avant de capturer des images.");
+      return;
+    }
+    setErrorMessage("");
+    captureImages();
+  };
 
   const captureImages = async () => {
-    if (!webcamRef.current || !letter) {
-      alert("Please select a letter before capturing images.");
-      return;
-    }
-
-    if (!session) {
-      alert("Please log in to capture images.");
-      return;
-    }
-
-    const capturedImages = [];
-    const captureInterval = 1000;
-    const duration = 10000; // 10 seconds
-    const totalCaptures = duration / captureInterval;
-
-    for (let i = 0; i < totalCaptures; i++) {
-      capturedImages.push(webcamRef.current.getScreenshot());
-      await new Promise((resolve) => setTimeout(resolve, captureInterval));
-    }
-
-    if (!capturedImages.length || !letter || !session.user.id) {
-      alert("Missing required fields.");
+    if (!webcamRef.current) {
+      alert("La webcam n’est pas prête.");
       return;
     }
 
     setUploading(true);
+    setCountdown(10); 
+    const capturedImages = [];
+    const captureInterval = 1000;
+    const totalCaptures = 10;
+
+    for (let i = 0; i < totalCaptures; i++) {
+      if (webcamRef.current) {
+        capturedImages.push(webcamRef.current.getScreenshot());
+      }
+      await new Promise((resolve) => setTimeout(resolve, captureInterval));
+    }
+
+    if (!capturedImages.length || !letter || !session.user.id) {
+      alert("Champs obligatoires manquants.");
+      setUploading(false);
+      return;
+    }
+
     const batchSize = 5;
     const totalBatches = Math.ceil(capturedImages.length / batchSize);
 
@@ -81,16 +124,24 @@ export default function TakePhoto() {
         if (result.success) {
           setProgress(((batchIndex + 1) / totalBatches) * 100);
         } else {
-          alert("Failed to upload images.");
+          alert("Échec du téléchargement des images.");
           break;
         }
       }
-      alert(`Successfully uploaded images for letter "${letter}".`);
+      alert(`Images téléchargées avec succès pour la lettre "${letter}".`);
     } catch (error) {
-      console.error("Upload failed:", error);
-      alert("An error occurred during upload.");
+      console.error("Échec du téléchargement :", error);
+      alert("Une erreur est survenue lors du téléchargement.");
     } finally {
       setUploading(false);
+      setCountdown(10);
+    }
+  };
+
+  const handleLetterChange = (e) => {
+    setLetter(e.target.value);
+    if (e.target.value) {
+      setErrorMessage("");
     }
   };
 
@@ -100,39 +151,32 @@ export default function TakePhoto() {
       initial="hidden"
       animate="visible"
     >
-      {/* Header Section */}
-      <header className="flex justify-between items-center py-4 px-6">
-        <h1 className="text-xl font-bold">LSF Dataset Tool</h1>
-        <button
-          onClick={() => setIsTutorialOpen(true)}
-          className="bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4 rounded-md font-bold shadow-md"
-        >
-          Help
-        </button>
-      </header>
-
-      {/* Main Content */}
       <motion.main
-        className="flex flex-col items-center justify-center text-center flex-grow"
+        className="flex flex-col items-center justify-center text-center flex-grow "
         variants={itemVariants}
       >
         <h1 className="text-4xl font-bold tracking-tight mb-6">
           Capture Images for LSF Dataset
         </h1>
         <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-8">
-          Help us create a comprehensive dataset for French Sign Language (LSF)
-          by capturing images for each letter of the alphabet.
+        Aidez-nous à créer un jeu de données complet pour la Langue des Signes Française (LSF)
+        en capturant des images pour chaque lettre de l’alphabet.
         </p>
-
+        <button
+          onClick={() => setIsTutorialOpen(true)}
+          className="bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4 rounded-md font-bold shadow-md"
+        >
+          aide
+        </button>
         {/* Letter Selection */}
         <motion.div className="mb-8 w-full max-w-sm mx-auto" variants={itemVariants}>
           <label htmlFor="letter" className="block text-lg font-medium mb-2">
-            Select Letter:
+          Sélectionnez une lettre :
           </label>
           <select
             id="letter"
             value={letter}
-            onChange={(e) => setLetter(e.target.value)}
+            onChange={handleLetterChange}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           >
             <option value="">--Select--</option>
@@ -142,7 +186,26 @@ export default function TakePhoto() {
               </option>
             ))}
           </select>
+
+          {/* Error message if letter not selected */}
+          {letter === "" && (
+            <p className="text-red-500 mt-2">{errorMessage}</p>
+          )}
         </motion.div>
+
+        {/* Countdown Timer */}
+        {uploading && countdown > 0 && (
+          <motion.div className="mb-4 text-2xl font-semibold text-gray-700">
+            <p>Temps restant : {countdown} sec</p>
+          </motion.div>
+        )}
+
+        {/* Uploading message when countdown reaches 0 */}
+        {uploading && countdown === 0 && (
+          <motion.div className="mb-4 text-2xl font-semibold text-gray-700">
+            <p>Téléchargement en cours…</p>
+          </motion.div>
+        )}
 
         {/* Webcam */}
         <motion.div className="relative mb-8" variants={itemVariants}>
@@ -157,33 +220,18 @@ export default function TakePhoto() {
         {/* Capture Button */}
         <motion.div variants={buttonVariants} whileHover="hover">
           <button
-            onClick={captureImages}
-            disabled={uploading || !letter || !session}
-            className={`${
-              uploading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-white text-indigo-600 hover:bg-gray-200"
-            } font-bold py-3 px-8 rounded-full shadow-md transition`}
+            onClick={handleCaptureClick}
+            className="bg-white text-indigo-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full shadow-md transition"
+            disabled={uploading}
           >
-            {uploading ? "Uploading..." : "Capture"}
+            {uploading ? "..." : "Capture"}
           </button>
         </motion.div>
 
         {/* Progress Bar */}
-        {uploading && (
-          <motion.div
-            className="w-full max-w-lg mx-auto mt-6"
-            variants={itemVariants}
-          >
-            <div className="w-full h-3 bg-gray-300 rounded-full">
-              <div
-                className="h-full bg-green-500 rounded-full"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-          </motion.div>
-        )}
+       
       </motion.main>
+
       {/* Tutorial Modal */}
       {isTutorialOpen && (
         <TutorialModal
