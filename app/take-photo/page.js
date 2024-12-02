@@ -32,7 +32,6 @@ export default function TakePhoto() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-
   useEffect(() => {
     if (status === "unauthenticated") {
       setIsRegisterModalOpen(true);
@@ -76,7 +75,7 @@ export default function TakePhoto() {
     }
 
     setUploading(true);
-    setCountdown(10); 
+    setCountdown(10);
     const capturedImages = [];
     const captureInterval = 1000;
     const totalCaptures = 10;
@@ -140,6 +139,10 @@ export default function TakePhoto() {
     }
   };
 
+  const getLetterImage = (letter) => {
+    return `/letters/${letter}.jpg`;
+  };
+
   return (
     <motion.div
       variants={containerVariants}
@@ -151,28 +154,29 @@ export default function TakePhoto() {
         variants={itemVariants}
       >
         <h1 className="text-4xl font-bold tracking-tight mb-6">
-          Capture Images for LSF Dataset
+        Capturer des images pour le corpus LSF
         </h1>
         <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-8">
-        Aidez-nous à créer un jeu de données complet pour la Langue des Signes Française (LSF)
-        en capturant des images pour chaque lettre de l’alphabet.
+          Aidez-nous à créer un jeu de données complet pour la Langue des Signes Française (LSF)
+          en capturant des images pour chaque lettre de l’alphabet.
         </p>
         <button
           onClick={() => setIsTutorialOpen(true)}
           className="bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4 rounded-md font-bold shadow-md"
         >
-          aide
+          Comment faire?
         </button>
+
         {/* Letter Selection */}
         <motion.div className="mb-8 w-full max-w-sm mx-auto" variants={itemVariants}>
-          <label htmlFor="letter" className="block text-lg font-medium mb-2">
-          Sélectionnez une lettre :
+          <label htmlFor="letter" className="block text-lg font-medium mb-2 mt-5">
+            Sélectionnez une lettre :
           </label>
           <select
             id="letter"
             value={letter}
             onChange={handleLetterChange}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="text-black text-center p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 mt-5"
           >
             <option value="">--Select--</option>
             {[..."abcdefghijklmnopqrstuvwxyz"].map((char) => (
@@ -182,14 +186,10 @@ export default function TakePhoto() {
             ))}
           </select>
 
-          {/* Error message if letter not selected */}
-          {letter === "" && (
-            <p className="text-red-500 mt-2">{errorMessage}</p>
-          )}
         </motion.div>
 
-        {/* Countdown Timer */}
-        {uploading && countdown > 0 && (
+         {/* Countdown Timer */}
+         {uploading && countdown > 0 && (
           <motion.div className="mb-4 text-2xl font-semibold text-gray-700">
             <p>Temps restant : {countdown} sec</p>
           </motion.div>
@@ -202,18 +202,32 @@ export default function TakePhoto() {
           </motion.div>
         )}
 
-        {/* Webcam */}
-        <motion.div className="relative mb-8" variants={itemVariants}>
-          <Webcam
-            ref={webcamRef}
-            audio={false}
-            screenshotFormat="image/jpeg"
-            className="w-full max-w-md mx-auto border-4 border-indigo-600 rounded-lg shadow-lg"
-          />
-        </motion.div>
+        {/* Container for webcam and image side by side */}
+        <div className="flex flex-row items-center justify-center space-x-8">
+          {/* Webcam */}
+          <motion.div className="relative" variants={itemVariants}>
+            <Webcam
+              ref={webcamRef}
+              audio={false}
+              screenshotFormat="image/jpeg"
+              className="w-full max-w-2xl mx-auto border-4 border-indigo-600 rounded-lg shadow-lg" 
+            />
+          </motion.div>
 
-        {/* Capture Button */}
-        <motion.div variants={buttonVariants} whileHover="hover">
+          {/* Show the corresponding letter image */}
+          {letter && (
+            <div className="mt-4 sm:mt-0 sm:ml-8 w-full sm:w-1/3"> {/* Adjusted width here */}
+              <img
+                src={getLetterImage(letter)}
+                alt={`Image of letter ${letter.toUpperCase()}`}
+                className="w-full max-w-xs mx-auto border-4 border-indigo-600 rounded-lg shadow-lg" // Adjusted max width here
+              />
+            </div>
+          )}
+        </div>
+
+       {/* Capture Button */}
+        <motion.div variants={buttonVariants} whileHover="hover" className="mt-8"> {/* Added margin-top here */}
           <button
             onClick={handleCaptureClick}
             className="bg-white text-indigo-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full shadow-md transition"
@@ -223,8 +237,6 @@ export default function TakePhoto() {
           </button>
         </motion.div>
 
-        {/* Progress Bar */}
-       
       </motion.main>
 
       {/* Tutorial Modal */}

@@ -30,7 +30,7 @@ export default function HeaderWithButtons() {
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">
             <a href="/" className="hover:underline">
-              LSF Dataset
+            Corpus LSF
             </a>
           </h1>
           {/* Hamburger Menu */}

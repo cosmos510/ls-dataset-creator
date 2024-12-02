@@ -128,18 +128,13 @@ export default function HomePage() {
       <motion.div
         className="flex flex-col flex-grow items-center justify-center text-center"
         variants={itemVariants}
-        style={{ minHeight: "50vh", marginTop: "200px"}}
+        style={{ minHeight: "50vh", marginTop: "150px"}}
       >
         <h1 className="text-5xl font-extrabold tracking-tight mb-6">
-          Créez le jeu de données LSF
+          Créez un corpus  LSF
         </h1>
         <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-8">
-          Rejoignez notre initiative pour créer un jeu de données complet de la
-          Langue des Signes Française (LSF). Ensemble, nous pouvons favoriser
-          l'inclusion, l'accessibilité et l'innovation dans divers domaines.
-          Notre objectif ? Créer un modèle d'IA capable de reconnaître les lettres
-          signées en dactylologie, afin de faciliter la communication pour les
-          personnes sourdes et malentendantes.
+        Rejoignez notre projet pour créer un corpus dédié à la Langue des Signes Française (LSF), en commençant par un modèle d’intelligence artificielle capable de reconnaître les lettres signées en dactylologie. Ce modèle a pour but de faciliter la communication des personnes sourdes et malentendantes, en offrant une meilleure accessibilité.
         </p>
         <div className="mt-4">
           <button
@@ -158,88 +153,92 @@ export default function HomePage() {
         variants={descriptionVariants}
         initial="hidden"
         animate={showDescription && !hideSecondSection ? "visible" : "hidden"}
-        style={{ minHeight: "80vh" }}
+        style={{ minHeight: "60vh" }}
       >
         <h2 className="text-3xl font-semibold text-white mb-6">
           Pourquoi faisons-nous cela ?
         </h2>
         <p className="text-lg text-gray-200">
-          Ce projet vise à créer un modèle d'intelligence artificielle (IA)
-          capable de reconnaître les lettres signées en dactylologie. Pour ce faire,
-          nous avons besoin d'un grand nombre de photos de chaque lettre signée
-          pour entraîner le modèle. Vous pouvez contribuer en prenant des photos des
-          lettres que vous signez, et en rejoignant une communauté de personnes
-          passionnées par l'inclusion et l'accessibilité. Ce n'est que le début :
-          l'objectif final est d'étendre ce projet à la Langue des Signes Française (LSF).
+        Nous avons besoin de photos des lettres signées pour entraîner ce modèle. Vous pouvez contribuer en prenant des photos des lettres que vous signez, et en rejoignant une communauté passionnée par l’inclusion. Ce projet n’est qu’un début : l’objectif final est d’étendre cette technologie à l’ensemble de la LSF.
         </p>
       </motion.section>
   
       {/* Troisième section : Comment ça marche ? */}
       <motion.section
-        className="flex flex-col items-center justify-center text-center py-12 max-w-3xl mx-auto px-4"
-        variants={descriptionVariants}
-        initial="hidden"
-        animate={showDescription ? "visible" : "hidden"}
-        style={{ minHeight: "60vh", backgroundColor: "#5A3D8B" }}
-      >
-        <h2 className="text-3xl font-semibold text-white mb-6">
-          Comment ça marche ?
-        </h2>
-        <p className="text-lg text-gray-200 mb-8">
-          Participer est simple et rapide ! Voici les étapes pour contribuer à
-          la création du jeu de données LSF et aider à l'entraînement du modèle
-          d'IA pour la reconnaissance des lettres signées.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 max-w-2xl mx-auto">
-          <div className="flex flex-col items-center bg-white text-indigo-600 p-6 rounded-lg shadow-lg">
-            <span className="text-xl font-bold text-indigo-700 mb-4">1. Prenez une photo</span>
-            <p className="text-md text-gray-700">
-              Prenez une photo de la lettre en dactylologie que vous signez. Cette
-              photo nous aidera à enrichir le jeu de données pour entraîner notre IA.
-              Vous avez 10 secondes pour prendre une photo toutes les secondes.
-            </p>
-          </div>
-          <div className="flex flex-col items-center bg-white text-indigo-600 p-6 rounded-lg shadow-lg">
-            <span className="text-xl font-bold text-indigo-700 mb-4">2. Contribuez au projet</span>
-            <p className="text-md text-gray-700">
-              Enregistrez votre photo et contribuez au projet. Chaque photo est
-              importante pour entraîner le modèle d'IA à reconnaître les lettres signées.
-            </p>
-          </div>
-          <div className="flex flex-col items-center bg-white text-indigo-600 p-6 rounded-lg shadow-lg">
-            <span className="text-xl font-bold text-indigo-700 mb-4">3. Suivez l'évolution</span>
-            <p className="text-md text-gray-700">
-              Suivez les progrès du projet et voyez comment votre contribution aide
-              à enrichir le jeu de données LSF pour entraîner le modèle d'IA.
-            </p>
-          </div>
-        </div>
-      </motion.section>
+  className="flex flex-col items-center justify-center text-center py-12 max-w-3xl mx-auto px-4"
+  variants={descriptionVariants}
+  initial="hidden"
+  animate={showDescription ? "visible" : "hidden"}
+  style={{ minHeight: "60vh", backgroundColor: "#5A3D8B" }}
+>
+  <h2 className="text-3xl font-semibold text-white mb-6">
+    Comment ça marche ?
+  </h2>
+  <p className="text-lg text-gray-200 mb-8">
+    Participer est simple et rapide ! Voici les étapes pour contribuer à la
+    création du corpus LSF et aider à l'entraînement du modèle d'IA pour
+    la reconnaissance des lettres signées.
+  </p>
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mt-6 max-w-2xl mx-auto">
+    <div className="flex flex-col items-center bg-white text-indigo-600 p-6 rounded-lg shadow-lg">
+      <span className="text-xl font-bold text-indigo-700 mb-4">1. Consultez le tutoriel</span>
+      <p className="text-md text-gray-700">
+        Avant de commencer, lisez le tutoriel pour comprendre comment réaliser les
+        photos correctement. Suivez les instructions pour vous préparer à capturer
+        les bonnes images.
+      </p>
+    </div>
+    <div className="flex flex-col items-center bg-white text-indigo-600 p-6 rounded-lg shadow-lg">
+      <span className="text-xl font-bold text-indigo-700 mb-4">2. Capturez les photos</span>
+      <p className="text-md text-gray-700">
+        Choisissez une lettre à signer. Une photo de cette lettre apparaîtra à côté
+        de votre flux webcam. Pendant 10 secondes, des photos seront automatiquement
+        prises toutes les secondes. Vous n'avez rien d'autre à faire que signer.
+      </p>
+    </div>
+    <div className="flex flex-col items-center bg-white text-indigo-600 p-6 rounded-lg shadow-lg">
+      <span className="text-xl font-bold text-indigo-700 mb-4">3. Enregistrez et contribuez</span>
+      <p className="text-md text-gray-700">
+        Une fois les photos capturées, elles seront automatiquement enregistrées et envoyées
+        pour enrichir le corpus. Chaque contribution aide à améliorer l'IA pour
+        reconnaître les lettres signées.
+      </p>
+    </div>
+    <div className="flex flex-col items-center bg-white text-indigo-600 p-6 rounded-lg shadow-lg">
+      <span className="text-xl font-bold text-indigo-700 mb-4">4. Profitez d'avantages exclusifs</span>
+      <p className="text-md text-gray-700">
+        Les 3 premiers contributeurs recevront un accès exclusif à l'application
+        . En plus, tous les utilisateurs recevront des mises
+        à jour régulières par mail pour suivre l'évolution du projet.
+      </p>
+    </div>
+  </div>
+</motion.section>
   
       {/* Nouvelle section : Partagez cette initiative */}
       <motion.section
-        className="flex flex-col items-center justify-center text-center py-12 text-white"
-        variants={descriptionVariants}
-        initial="hidden"
-        animate={showDescription ? "visible" : "hidden"}
-        style={{ minHeight: "80vh" }}
-      >
-        <h2 className="text-3xl font-semibold mb-6">
-          Partagez cette initiative
-        </h2>
-        <div className="max-w-3xl mx-auto text-lg text-gray-200 mb-8">
-          <p className="mb-4">
-            Vous avez rejoint l'initiative, maintenant, faites découvrir ce projet
-            à vos amis et à votre famille. Plus nous serons nombreux, plus notre IA
-            pourra apprendre rapidement à reconnaître les lettres signées et
-            améliorer l'inclusion pour les personnes sourdes et malentendantes.
-          </p>
-          <p className="mb-3">
-            N'hésitez pas à partager ce site avec vos proches et sur vos réseaux sociaux pour
-            soutenir la cause.
-          </p>
-        </div>
-      </motion.section>
+  className="flex flex-col items-center justify-center text-center py-12 text-white"
+  variants={descriptionVariants}
+  initial="hidden"
+  animate={showDescription ? "visible" : "hidden"}
+  style={{ minHeight: "60vh" }}
+>
+  <h2 className="text-3xl font-semibold mb-4">
+    Partagez cette initiative
+  </h2>
+  <div className="max-w-3xl mx-auto text-lg text-gray-200 mb-4">
+    <p className="mb-4">
+      Vous avez rejoint l'initiative, c'est maintenant à vous de faire connaître ce
+      projet à vos proches. Plus nous serons nombreux, plus notre IA pourra apprendre
+      rapidement à reconnaître les lettres signées et améliorer l'inclusion des
+      personnes sourdes et malentendantes.
+    </p>
+    <p>
+      Partagez ce site avec vos amis, votre famille, et sur vos réseaux sociaux pour
+      soutenir cette cause importante.
+    </p>
+  </div>
+</motion.section>
   
       {/* Section des barres de progression */}
       <motion.section className="text-center py-12 mb-20">
