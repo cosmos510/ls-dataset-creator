@@ -10,21 +10,34 @@ const cspHeader = `
     form-action 'self';
     frame-ancestors 'none';
     upgrade-insecure-requests;
-`
+`;
+
 const nextConfig = {
-	async headers() {
-		return [
-		  {
-			source: '/(.*)',
-			headers: [
-			  {
-				key: 'Content-Security-Policy',
-				value: cspHeader.replace(/\n/g, ''),
-			  },
-			],
-		  },
-		]
-	  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: cspHeader.replace(/\n/g, ''),
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'no-referrer',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'geolocation=(self), microphone=(self), camera=(self)',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
