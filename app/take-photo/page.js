@@ -32,11 +32,6 @@ export default function TakePhoto() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    if (Notification.permission !== "granted") {
-      Notification.requestPermission();
-    }
-  }, []);
 
   useEffect(() => {
     if (status === "unauthenticated") {

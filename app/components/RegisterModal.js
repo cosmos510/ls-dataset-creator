@@ -151,8 +151,9 @@ export default function RegisterModal({ isOpen, onClose }) {
         <form onSubmit={isLogin ? onLogin : onRegister} autoComplete="off">
           {!isLogin && (
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-semibold mb-2">Nom d'utilisateur</label>
+              <label htmlFor="username" className="block text-gray-700 text-sm font-semibold mb-2">Nom d'utilisateur</label>
               <input
+                id="username"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -164,8 +165,9 @@ export default function RegisterModal({ isOpen, onClose }) {
           )}
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">Adresse e-mail</label>
+            <label htmlFor="email" className="block text-gray-700 text-sm font-semibold mb-2">Adresse e-mail</label>
             <input
+              id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -176,8 +178,9 @@ export default function RegisterModal({ isOpen, onClose }) {
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-semibold mb-2">Mot de passe</label>
+            <label htmlFor="password" className="block text-gray-700 text-sm font-semibold mb-2">Mot de passe</label>
             <input
+              id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
