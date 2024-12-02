@@ -1,21 +1,18 @@
 "use client";
 
+import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import RegisterModal from "./RegisterModal";
 import TutorialModal from "./TutorialModal";
-import LogoutButton from "./LogoutButton";
 
 export default function HeaderWithButtons() {
+  const { data: session } = useSession();
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isTutorialModalOpen, setIsTutorialModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const openRegisterModal = () => {
     setIsRegisterModalOpen(true);
-  };
-
-  const openTutorialModal = () => {
-    setIsTutorialModalOpen(true);
   };
 
   const closeModal = () => {
@@ -29,7 +26,7 @@ export default function HeaderWithButtons() {
 
   return (
     <>
-      <header className=" text-white py-4 px-6 relative">
+      <header className="text-white py-4 px-6 relative">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">
             <a href="/" className="hover:underline">
@@ -65,19 +62,29 @@ export default function HeaderWithButtons() {
             >
               Prendre des photos
             </a>
+            {!session ? (
+              <>
+                <button
+                  onClick={openRegisterModal}
+                  className="bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+                >
+                  Connexion/Inscription
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => signOut()}
+                className="bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+              >
+                Déconnexion
+              </button>
+            )}
             <button
-              onClick={openRegisterModal}
-              className="bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
-            >
-              Connexion/Inscription
-            </button>
-            <button
-              onClick={openTutorialModal}
+              onClick={() => setIsTutorialModalOpen(true)}
               className="bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
             >
               Tutoriel
             </button>
-            <LogoutButton />
           </nav>
         </div>
 
@@ -92,36 +99,44 @@ export default function HeaderWithButtons() {
               >
                 Prendre des photos
               </a>
+              {!session ? (
+                <button
+                  onClick={() => {
+                    toggleMenu();
+                    openRegisterModal();
+                  }}
+                  className="bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+                >
+                  Connexion/Inscription
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    toggleMenu();
+                    signOut();
+                  }}
+                  className="bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+                >
+                  Déconnexion
+                </button>
+              )}
               <button
                 onClick={() => {
                   toggleMenu();
-                  openRegisterModal();
-                }}
-                className="bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
-              >
-                Connexion/Inscription
-              </button>
-              <button
-                onClick={() => {
-                  toggleMenu();
-                  openTutorialModal();
+                  setIsTutorialModalOpen(true);
                 }}
                 className="bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
               >
                 Tutoriel
               </button>
-              <LogoutButton />
             </div>
           </div>
         )}
       </header>
 
-      {/* Modal de connexion/inscription */}
       {isRegisterModalOpen && (
         <RegisterModal isOpen={isRegisterModalOpen} onClose={closeModal} />
       )}
-
-      {/* Modal du tutoriel */}
       {isTutorialModalOpen && (
         <TutorialModal isOpen={isTutorialModalOpen} onClose={closeModal} />
       )}

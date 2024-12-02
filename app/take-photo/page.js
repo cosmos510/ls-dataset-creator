@@ -96,7 +96,6 @@ export default function TakePhoto() {
 
   return (
     <motion.div
-      className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white px-4"
       variants={containerVariants}
       initial="hidden"
       animate="visible"

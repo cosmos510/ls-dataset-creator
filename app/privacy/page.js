@@ -2,7 +2,7 @@ import React from "react";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white px-4 ">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white px-4">
       {/* Header Section */}
       <header className="flex justify-between items-center py-4 px-6">
         <h1 className="text-xl font-bold">Politique de Confidentialité</h1>
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
             </p>
             <p>
               <strong>Martin Maxime</strong><br />
-              Adresse : 9 rue chante coq 74200 thonon les bains<br />
+              Adresse : 9 rue chante coq, 74200 Thonon-les-Bains<br />
               E-mail : maximemartin510@gmail.com
             </p>
           </section>
@@ -42,13 +42,14 @@ const PrivacyPolicy = () => {
             <h3 className="text-xl font-semibold mt-4 mb-2">Données collectées pour l’utilisation du site web</h3>
             <ul className="list-disc pl-6">
               <li><strong>Adresse e-mail</strong> : Lors de l’enregistrement ou de la connexion au site, nous collectons votre adresse e-mail.</li>
-              <ul className="list-inside">
-                <li>Créer un compte utilisateur.</li>
-                <li>Envoyer des informations liées à l’utilisation du site (notifications, changements importants, etc.).</li>
-                <li>Garantir l’accès sécurisé à votre espace personnel.</li>
-              </ul>
-              <p>Votre e-mail ne sera jamais partagé à des fins commerciales ou publicitaires sans votre consentement explicite.</p>
             </ul>
+            <ul className="list-inside pl-6">
+              <li>Créer un compte utilisateur.</li>
+              <li>Envoyer des informations liées à l’utilisation du site (notifications, changements importants, etc.).</li>
+              <li>Garantir l’accès sécurisé à votre espace personnel.</li>
+            </ul>
+            <p>Votre e-mail ne sera jamais partagé à des fins commerciales ou publicitaires sans votre consentement explicite.</p>
+
             <ul className="list-disc pl-6 mt-4">
               <li><strong>Cookies et technologies similaires</strong> : Nous utilisons des cookies pour faciliter la navigation et la gestion des sessions d’authentification.</li>
             </ul>
