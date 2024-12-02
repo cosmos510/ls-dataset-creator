@@ -5,7 +5,7 @@ const ContentSecurityPolicy = `
   style-src 'self' 'unsafe-inline' fonts.googleapis.com;
   img-src 'self' data:;
   font-src 'self' fonts.googleapis.com fonts.gstatic.com;
-  connect-src 'self' www.google-analytics.com;
+  connect-src 'self' www.google-analytics.com ;
   frame-ancestors 'none';
   object-src 'none';
   base-uri 'self';
@@ -27,4 +27,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
