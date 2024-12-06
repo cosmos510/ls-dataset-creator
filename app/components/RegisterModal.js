@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export default function RegisterModal({ isOpen, onClose }) {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -67,7 +69,7 @@ export default function RegisterModal({ isOpen, onClose }) {
       }
 
       setLoading(false);
-      
+
       clearForm();
       onClose();
     } catch (err) {
@@ -106,6 +108,12 @@ export default function RegisterModal({ isOpen, onClose }) {
     }
   };
 
+  const handleModalClose = () => {
+    clearForm();
+    onClose();
+    router.push('/');
+  };
+
   useEffect(() => {
     if (!isOpen) {
       clearForm();
@@ -118,10 +126,7 @@ export default function RegisterModal({ isOpen, onClose }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
       <div className="bg-white w-full max-w-md p-8 rounded-lg shadow-lg relative">
         <button
-          onClick={() => {
-            clearForm();
-            onClose();
-          }}
+          onClick={handleModalClose}
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl font-bold"
         >
           &times;
