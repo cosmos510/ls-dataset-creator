@@ -76,45 +76,53 @@ export default function TakePhoto() {
 
     setUploading(true);
     setCountdown(10);
-
     const capturedImages = [];
-    const captureInterval = 2000; // 2 seconds
-    const totalCaptures = 5;
+    const captureInterval = 1000;
+    const totalCaptures = 10;
 
     for (let i = 0; i < totalCaptures; i++) {
       if (webcamRef.current) {
         capturedImages.push(webcamRef.current.getScreenshot());
       }
-      if (i < totalCaptures - 1) {
-        await new Promise((resolve) => setTimeout(resolve, captureInterval));
-      }
+      await new Promise((resolve) => setTimeout(resolve, captureInterval));
     }
 
-    if (!capturedImages.length || !letter || !session?.user?.id) {
+    if (!capturedImages.length || !letter || !session.user.id) {
       alert("Champs obligatoires manquants.");
       setUploading(false);
       return;
     }
 
+    const batchSize = 5;
+    const totalBatches = Math.ceil(capturedImages.length / batchSize);
+
     try {
-      const response = await fetch("/api/photo/timer", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          images: capturedImages,
-          letter,
-          userId: session.user.id,
-        }),
-      });
+      for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
+        const batch = capturedImages.slice(
+          batchIndex * batchSize,
+          (batchIndex + 1) * batchSize
+        );
 
-      const result = await response.json();
+        const response = await fetch("/api/photo/timer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            images: batch,
+            letter,
+            userId: session.user.id,
+          }),
+        });
 
-      if (result.success) {
-        setProgress(100);
-        alert(`Images téléchargées avec succès pour la lettre "${letter}".`);
-      } else {
-        alert("Échec du téléchargement des images.");
+        const result = await response.json();
+
+        if (result.success) {
+          setProgress(((batchIndex + 1) / totalBatches) * 100);
+        } else {
+          alert("Échec du téléchargement des images.");
+          break;
+        }
       }
+      alert(`Images téléchargées avec succès pour la lettre "${letter}".`);
     } catch (error) {
       console.error("Échec du téléchargement :", error);
       alert("Une erreur est survenue lors du téléchargement.");
@@ -142,11 +150,11 @@ export default function TakePhoto() {
       animate="visible"
     >
       <motion.main
-        className="flex flex-col items-center justify-center text-center flex-grow"
+        className="flex flex-col items-center justify-center text-center flex-grow "
         variants={itemVariants}
       >
         <h1 className="text-4xl font-bold tracking-tight mb-6">
-          Capturer des images pour le corpus LSF
+        Capturer des images pour le corpus LSF
         </h1>
         <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-8">
           Aidez-nous à créer un jeu de données complet pour la Langue des Signes Française (LSF)
@@ -159,6 +167,7 @@ export default function TakePhoto() {
           Comment faire?
         </button>
 
+        {/* Letter Selection */}
         <motion.div className="mb-8 w-full max-w-sm mx-auto" variants={itemVariants}>
           <label htmlFor="letter" className="block text-lg font-medium mb-2 mt-5">
             Sélectionnez une lettre :
@@ -176,42 +185,49 @@ export default function TakePhoto() {
               </option>
             ))}
           </select>
+
         </motion.div>
 
-        {uploading && countdown > 0 && (
+         {/* Countdown Timer */}
+         {uploading && countdown > 0 && (
           <motion.div className="mb-4 text-2xl font-semibold text-gray-700">
             <p>Temps restant : {countdown} sec</p>
           </motion.div>
         )}
 
+        {/* Uploading message when countdown reaches 0 */}
         {uploading && countdown === 0 && (
           <motion.div className="mb-4 text-2xl font-semibold text-gray-700">
             <p>Téléchargement en cours…</p>
           </motion.div>
         )}
 
+        {/* Container for webcam and image side by side */}
         <div className="flex flex-row items-center justify-center space-x-8">
+          {/* Webcam */}
           <motion.div className="relative" variants={itemVariants}>
             <Webcam
               ref={webcamRef}
               audio={false}
               screenshotFormat="image/jpeg"
-              className="w-full max-w-2xl mx-auto border-4 border-indigo-600 rounded-lg shadow-lg"
+              className="w-full max-w-2xl mx-auto border-4 border-indigo-600 rounded-lg shadow-lg" 
             />
           </motion.div>
 
+          {/* Show the corresponding letter image */}
           {letter && (
-            <div className="mt-4 sm:mt-0 sm:ml-8 w-full sm:w-1/3">
+            <div className="mt-4 sm:mt-0 sm:ml-8 w-full sm:w-1/3"> {/* Adjusted width here */}
               <img
                 src={getLetterImage(letter)}
                 alt={`Image of letter ${letter.toUpperCase()}`}
-                className="w-full max-w-xs mx-auto border-4 border-indigo-600 rounded-lg shadow-lg"
+                className="w-full max-w-xs mx-auto border-4 border-indigo-600 rounded-lg shadow-lg" // Adjusted max width here
               />
             </div>
           )}
         </div>
 
-        <motion.div variants={buttonVariants} whileHover="hover" className="mt-8">
+       {/* Capture Button */}
+        <motion.div variants={buttonVariants} whileHover="hover" className="mt-8"> {/* Added margin-top here */}
           <button
             onClick={handleCaptureClick}
             className="bg-white text-indigo-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full shadow-md transition"
@@ -220,8 +236,10 @@ export default function TakePhoto() {
             {uploading ? "..." : "Capture"}
           </button>
         </motion.div>
+
       </motion.main>
 
+      {/* Tutorial Modal */}
       {isTutorialOpen && (
         <TutorialModal
           isOpen={isTutorialOpen}
