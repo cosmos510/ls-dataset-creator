@@ -55,35 +55,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Error saving metadata' }, { status: 500 });
     }
 
-    // Update or insert photo count
-    const { data: countData, error: countError } = await supabase
-      .from('photo_counts')
-      .select('count')
-      .eq('letter', letter)
-      .single();
 
-    if (countError && countError.code === 'PGRST116') {
-      // Row not found, insert new
-      const { error: insertCountError } = await supabase
-        .from('photo_counts')
-        .insert([{ letter, count: images.length }]);
-
-      if (insertCountError) {
-        console.error('Error inserting photo count:', insertCountError);
-        return NextResponse.json({ error: 'Error inserting photo count' }, { status: 500 });
-      }
-    } else if (countData) {
-      // Row found, update count
-      const { error: updateError } = await supabase
-        .from('photo_counts')
-        .update({ count: countData.count + images.length })
-        .eq('letter', letter);
-
-      if (updateError) {
-        console.error('Error updating photo count:', updateError);
-        return NextResponse.json({ error: 'Error updating photo count' }, { status: 500 });
-      }
-    }
 
     return NextResponse.json({
       success: true,
