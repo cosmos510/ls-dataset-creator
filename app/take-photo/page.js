@@ -106,7 +106,7 @@ export default function TakePhoto() {
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok && result.success) {
         alert(`Images téléchargées avec succès pour la lettre "${letter}".`);
       } else {
         alert("Échec du téléchargement des images.");
