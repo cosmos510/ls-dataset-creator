@@ -6,15 +6,25 @@ const CookieConsent = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const isCookieAccepted = localStorage.getItem("cookieConsent");
-    if (!isCookieAccepted) {
+    try {
+      const isCookieAccepted = localStorage.getItem("cookieConsent");
+      if (!isCookieAccepted) {
+        setIsVisible(true);
+      }
+    } catch (error) {
+      console.error('Error accessing localStorage:', error);
       setIsVisible(true);
     }
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem("cookieConsent", "accepted");
-    setIsVisible(false);
+    try {
+      localStorage.setItem("cookieConsent", "accepted");
+      setIsVisible(false);
+    } catch (error) {
+      console.error('Error setting localStorage:', error);
+      setIsVisible(false);
+    }
   };
 
   if (!isVisible) return null;

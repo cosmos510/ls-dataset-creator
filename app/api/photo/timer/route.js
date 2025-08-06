@@ -36,7 +36,7 @@ export async function POST(req) {
         });
 
       if (error) {
-        console.error('Error uploading image:', error);
+        console.error('Error uploading image:', JSON.stringify(error));
         return NextResponse.json({ error: 'Error uploading image' }, { status: 500 });
       }
 
@@ -51,7 +51,7 @@ export async function POST(req) {
     const { error: insertError } = await supabase.from('photo').insert(photoRecords);
 
     if (insertError) {
-      console.error('Error saving metadata:', insertError);
+      console.error('Error saving metadata:', JSON.stringify(insertError));
       return NextResponse.json({ error: 'Error saving metadata' }, { status: 500 });
     }
 
