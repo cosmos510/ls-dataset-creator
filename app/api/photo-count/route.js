@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // Get counts directly from photo table
     const { data, error } = await supabase
       .from('photo')
       .select('letter')
@@ -14,13 +13,11 @@ export async function GET() {
       return NextResponse.json({ error: 'Error fetching photo counts' }, { status: 500 });
     }
 
-    // Count photos by letter and format as array
     const counts = {};
     data.forEach(photo => {
       counts[photo.letter] = (counts[photo.letter] || 0) + 1;
     });
 
-    // Convert to array format expected by frontend
     const letterCountsArray = Object.entries(counts).map(([letter, count]) => ({
       letter,
       count

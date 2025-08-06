@@ -12,7 +12,6 @@ export async function POST(req) {
       );
     }
 
-    // Validate user
     const { data: user, error: userError } = await supabase
       .from('users')
       .select('id')
@@ -25,7 +24,6 @@ export async function POST(req) {
 
     const photoRecords = [];
 
-    // Upload all images and prepare records
     for (const base64Image of images) {
       const imageName = `${letter}/${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
 
@@ -47,7 +45,6 @@ export async function POST(req) {
       });
     }
 
-    // Insert all photo records
     const { error: insertError } = await supabase.from('photo').insert(photoRecords);
 
     if (insertError) {
