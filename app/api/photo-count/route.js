@@ -14,13 +14,19 @@ export async function GET() {
       return NextResponse.json({ error: 'Error fetching photo counts' }, { status: 500 });
     }
 
-    // Count photos by letter
+    // Count photos by letter and format as array
     const counts = {};
     data.forEach(photo => {
       counts[photo.letter] = (counts[photo.letter] || 0) + 1;
     });
 
-    return NextResponse.json({ success: true, counts });
+    // Convert to array format expected by frontend
+    const letterCountsArray = Object.entries(counts).map(([letter, count]) => ({
+      letter,
+      count
+    }));
+
+    return NextResponse.json({ success: true, data: letterCountsArray });
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
