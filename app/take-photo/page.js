@@ -93,36 +93,24 @@ export default function TakePhoto() {
       return;
     }
 
-    const batchSize = 5;
-    const totalBatches = Math.ceil(capturedImages.length / batchSize);
-
     try {
-      for (let batchIndex = 0; batchIndex < totalBatches; batchIndex++) {
-        const batch = capturedImages.slice(
-          batchIndex * batchSize,
-          (batchIndex + 1) * batchSize
-        );
+      const response = await fetch("/api/photo/timer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          images: capturedImages,
+          letter,
+          userId: session.user.id,
+        }),
+      });
 
-        const response = await fetch("/api/photo/timer", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            images: batch,
-            letter,
-            userId: session.user.id,
-          }),
-        });
+      const result = await response.json();
 
-        const result = await response.json();
-
-        if (result.success) {
-          setProgress(((batchIndex + 1) / totalBatches) * 100);
-        } else {
-          alert("Échec du téléchargement des images.");
-          break;
-        }
+      if (result.success) {
+        alert(`Images téléchargées avec succès pour la lettre "${letter}".`);
+      } else {
+        alert("Échec du téléchargement des images.");
       }
-      alert(`Images téléchargées avec succès pour la lettre "${letter}".`);
     } catch (error) {
       console.error("Échec du téléchargement :", error);
       alert("Une erreur est survenue lors du téléchargement.");

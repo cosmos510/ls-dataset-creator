@@ -23,9 +23,9 @@ export async function POST(req) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
-    const imagePaths = [];
+    const photoRecords = [];
 
-    // Upload all images
+    // Upload all images and prepare records
     for (const base64Image of images) {
       const imageName = `${letter}/${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
 
@@ -40,18 +40,15 @@ export async function POST(req) {
         return NextResponse.json({ error: 'Error uploading image' }, { status: 500 });
       }
 
-      imagePaths.push(data.path);
-    }
-
-    // Insert metadata ONCE
-    const { error: insertError } = await supabase.from('photo').insert([
-      {
+      photoRecords.push({
         user_id: user.id,
         letter,
-        image_paths: imagePaths,
-        created_at: new Date().toISOString(),
-      },
-    ]);
+        file_path: data.path,
+      });
+    }
+
+    // Insert all photo records
+    const { error: insertError } = await supabase.from('photo').insert(photoRecords);
 
     if (insertError) {
       console.error('Error saving metadata:', insertError);
@@ -91,7 +88,7 @@ export async function POST(req) {
     return NextResponse.json({
       success: true,
       message: 'All images uploaded and metadata saved successfully!',
-      data: imagePaths,
+      data: photoRecords.map(r => r.file_path),
     });
   } catch (error) {
     console.error(error);
