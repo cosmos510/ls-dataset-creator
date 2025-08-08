@@ -191,10 +191,12 @@ export default function TakePhoto() {
               onChange={(e) => setLetter(e.target.value)}
               className="bg-white text-gray-800 text-lg sm:text-2xl font-bold px-4 sm:px-8 py-3 sm:py-4 rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-300 border-0"
               aria-describedby="letter-help"
+              lang="fr"
+              style={{ WebkitAppearance: 'menulist', appearance: 'menulist' }}
             >
-              <option value="">Choisir une lettre</option>
+              <option value="" lang="fr">Choisir une lettre</option>
               {[..."abcdefghijklmnopqrstuvwxyz"].map((char) => (
-                <option key={char} value={char}>
+                <option key={char} value={char} lang="en">
                   {char.toUpperCase()}
                 </option>
               ))}
