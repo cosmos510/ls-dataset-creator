@@ -7,30 +7,18 @@ import { useSession } from "next-auth/react";
 import TutorialModal from "../components/TutorialModal";
 import RegisterModal from "../components/RegisterModal";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.6, staggerChildren: 0.2 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
-
-const buttonVariants = {
-  hover: { scale: 1.05, boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)" },
-};
-
 export default function TakePhoto() {
   const webcamRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [letter, setLetter] = useState("");
-  const [progress, setProgress] = useState(0);
   const [countdown, setCountdown] = useState(10);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [isTutorialOpen, setIsTutorialOpen] = useState(false);
   const { data: session, status } = useSession();
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -47,7 +35,11 @@ export default function TakePhoto() {
   }, [countdown, uploading]);
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+      </div>
+    );
   }
 
   if (status === "unauthenticated") {
@@ -60,38 +52,36 @@ export default function TakePhoto() {
   }
 
   const handleCaptureClick = () => {
-    if (letter === "") {
-      alert("Veuillez sélectionner une lettre avant de capturer des images.");
+    if (!letter) {
+      setErrorMessage("Sélectionnez une lettre");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
       return;
     }
-    setErrorMessage("");
+    setCurrentStep(2);
     captureImages();
   };
 
   const captureImages = async () => {
     if (!webcamRef.current) {
-      alert("La webcam n’est pas prête.");
+      setErrorMessage("Caméra non disponible");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
       return;
     }
 
     setUploading(true);
     setCountdown(10);
     const capturedImages = [];
-    const captureInterval = 1000;
-    const totalCaptures = 10;
 
-    for (let i = 0; i < totalCaptures; i++) {
+    for (let i = 0; i < 10; i++) {
       if (webcamRef.current) {
         capturedImages.push(webcamRef.current.getScreenshot());
       }
-      await new Promise((resolve) => setTimeout(resolve, captureInterval));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
-    if (!capturedImages.length || !letter || !session.user.id) {
-      alert("Champs obligatoires manquants.");
-      setUploading(false);
-      return;
-    }
+    setCurrentStep(3);
 
     try {
       const response = await fetch("/api/photo/timer", {
@@ -107,133 +97,174 @@ export default function TakePhoto() {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        alert(`Images téléchargées avec succès pour la lettre "${letter}".`);
+        setShowSuccess(true);
+        setTimeout(() => {
+          setShowSuccess(false);
+          setCurrentStep(1);
+          setLetter("");
+        }, 3000);
       } else {
-        alert("Échec du téléchargement des images.");
+        setErrorMessage("Échec de l'envoi");
+        setShowError(true);
+        setTimeout(() => setShowError(false), 3000);
       }
     } catch (error) {
-      console.error("Échec du téléchargement :", error);
-      alert("Une erreur est survenue lors du téléchargement.");
+      setErrorMessage("Erreur réseau");
+      setShowError(true);
+      setTimeout(() => setShowError(false), 3000);
     } finally {
       setUploading(false);
       setCountdown(10);
+      setCurrentStep(1);
     }
-  };
-
-  const handleLetterChange = (e) => {
-    setLetter(e.target.value);
-    if (e.target.value) {
-      setErrorMessage("");
-    }
-  };
-
-  const getLetterImage = (letter) => {
-    return `/letters/${letter}.jpg`;
   };
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.main
-        className="flex flex-col items-center justify-center text-center flex-grow "
-        variants={itemVariants}
-      >
-        <h1 className="text-4xl font-bold tracking-tight mb-6">
-        Capturer des images pour le corpus LSF
-        </h1>
-        <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-8">
-          Aidez-nous à créer un jeu de données complet pour la Langue des Signes Française (LSF)
-          en capturant des images pour chaque lettre de l’alphabet.
-        </p>
-        <button
-          onClick={() => setIsTutorialOpen(true)}
-          className="bg-indigo-700 hover:bg-indigo-800 text-white py-2 px-4 rounded-md font-bold shadow-md"
+    <div className="min-h-screen flex flex-col p-4">
+      {/* Messages de feedback */}
+      {showSuccess && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg z-50 flex items-center"
         >
-          Comment faire?
-        </button>
-
-        {/* Letter Selection */}
-        <motion.div className="mb-8 w-full max-w-sm mx-auto" variants={itemVariants}>
-          <label htmlFor="letter" className="block text-lg font-medium mb-2 mt-5">
-            Sélectionnez une lettre :
-          </label>
-          <select
-            id="letter"
-            value={letter}
-            onChange={handleLetterChange}
-            className="text-black text-center p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 mt-5"
-          >
-            <option value="">--Select--</option>
-            {[..."abcdefghijklmnopqrstuvwxyz"].map((char) => (
-              <option key={char} value={char}>
-                {char.toUpperCase()}
-              </option>
-            ))}
-          </select>
-
+          <span className="mr-2">✓</span>
+          Photo envoyée !
         </motion.div>
+      )}
 
-         {/* Countdown Timer */}
-         {uploading && countdown > 0 && (
-          <motion.div className="mb-4 text-2xl font-semibold text-gray-700">
-            <p>Temps restant : {countdown} sec</p>
+      {showError && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-full shadow-lg z-50 flex items-center"
+        >
+          <span className="mr-2">⚠</span>
+          {errorMessage}
+        </motion.div>
+      )}
+
+      {/* Indicateur de progression */}
+      <div className="flex justify-center mb-6 mt-4">
+        {[1, 2, 3].map((step) => (
+          <div key={step} className="flex items-center">
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+              currentStep >= step ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-600'
+            }`}>
+              {step}
+            </div>
+            {step < 3 && <div className={`w-12 h-1 ${currentStep > step ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>}
+          </div>
+        ))}
+      </div>
+
+      <div className="text-center mb-6">
+        <p className="text-sm text-gray-300">
+          {currentStep === 1 && "Choisissez une lettre"}
+          {currentStep === 2 && "Capture en cours..."}
+          {currentStep === 3 && "Envoi..."}
+        </p>
+      </div>
+
+      {/* Interface principale */}
+      <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full">
+        
+        {/* Sélection de lettre */}
+        {currentStep === 1 && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-8"
+          >
+            <select
+              value={letter}
+              onChange={(e) => setLetter(e.target.value)}
+              className="bg-white text-gray-800 text-2xl font-bold px-8 py-4 rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-300 border-0"
+            >
+              <option value="">Choisir une lettre</option>
+              {[..."abcdefghijklmnopqrstuvwxyz"].map((char) => (
+                <option key={char} value={char}>
+                  {char.toUpperCase()}
+                </option>
+              ))}
+            </select>
           </motion.div>
         )}
 
-        {/* Uploading message when countdown reaches 0 */}
-        {uploading && countdown === 0 && (
-          <motion.div className="mb-4 text-2xl font-semibold text-gray-700">
-            <p>Téléchargement en cours…</p>
+        {/* Compteur pendant la capture */}
+        {uploading && countdown > 0 && (
+          <motion.div 
+            className="mb-8 text-center"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+          >
+            <div className="text-6xl font-bold text-white mb-2">{countdown}</div>
+            <div className="w-32 h-2 bg-white/20 rounded-full mx-auto">
+              <div 
+                className="h-2 bg-white rounded-full transition-all duration-1000"
+                style={{ width: `${((10 - countdown) / 10) * 100}%` }}
+              ></div>
+            </div>
           </motion.div>
         )}
 
-        {/* Container for webcam and image side by side */}
-        <div className="flex flex-row items-center justify-center space-x-8">
-          {/* Webcam */}
-          <motion.div className="relative" variants={itemVariants}>
+        {/* Interface caméra */}
+        <div className="flex flex-col lg:flex-row items-center gap-6 mb-8 w-full">
+          <div className="relative flex-1 max-w-md">
             <Webcam
               ref={webcamRef}
               audio={false}
               screenshotFormat="image/jpeg"
-              className="w-full max-w-2xl mx-auto border-4 border-indigo-600 rounded-lg shadow-lg" 
+              className="w-full aspect-video object-cover rounded-2xl shadow-xl border-4 border-white/20"
             />
-          </motion.div>
-
-          {/* Show the corresponding letter image */}
-          {letter && (
-            <div className="mt-4 sm:mt-0 sm:ml-8 w-full sm:w-1/3"> {/* Adjusted width here */}
-              <img
-                src={getLetterImage(letter)}
-                alt={`Image of letter ${letter.toUpperCase()}`}
-                className="w-full max-w-xs mx-auto border-4 border-indigo-600 rounded-lg shadow-lg" // Adjusted max width here
-              />
+            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-4 py-1 rounded-full text-sm font-medium shadow-lg">
+              Votre caméra
             </div>
+          </div>
+
+          {letter && (
+            <motion.div 
+              className="relative flex-1 max-w-md"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+            >
+              <img
+                src={`/letters/${letter}.jpg`}
+                alt={`Lettre ${letter.toUpperCase()}`}
+                className="w-full aspect-video object-cover rounded-2xl shadow-xl border-4 border-white/20"
+              />
+              <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-4 py-1 rounded-full text-sm font-medium shadow-lg">
+                Lettre {letter.toUpperCase()}
+              </div>
+            </motion.div>
           )}
         </div>
 
-       {/* Capture Button */}
-        <motion.div variants={buttonVariants} whileHover="hover" className="mt-8"> {/* Added margin-top here */}
+        {/* Boutons d'action */}
+        <div className="flex flex-col sm:flex-row gap-4 items-center">
+          <button
+            onClick={() => setIsTutorialOpen(true)}
+            className="text-gray-300 hover:text-white underline text-sm transition-colors"
+          >
+            Comment ça marche ?
+          </button>
+          
           <button
             onClick={handleCaptureClick}
-            className="bg-white text-indigo-600 hover:bg-gray-200 font-bold py-3 px-8 rounded-full shadow-md transition"
-            disabled={uploading}
+            disabled={uploading || !letter}
+            className="bg-white text-indigo-600 font-bold text-xl px-12 py-4 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
           >
-            {uploading ? "..." : "Capture"}
+            {uploading ? "Capture..." : "Commencer"}
           </button>
-        </motion.div>
+        </div>
+      </div>
 
-      </motion.main>
-
-      {/* Tutorial Modal */}
       {isTutorialOpen && (
         <TutorialModal
           isOpen={isTutorialOpen}
           onClose={() => setIsTutorialOpen(false)}
         />
       )}
-    </motion.div>
+    </div>
   );
 }
