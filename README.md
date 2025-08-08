@@ -1,57 +1,110 @@
-# LSF Corpus Project 🌐🤟
+# 🤟 Corpus LSF - Dictionnaire Collaboratif
 
-Welcome to the **LSF Corpus Project**! This initiative aims to build a comprehensive dataset of **Langue des Signes Française (LSF)**, or French Sign Language, to help train AI models for sign language recognition.
+> **Créons ensemble le plus grand dictionnaire de Langue des Signes Française**
 
-Our mission is to improve **accessibility** and **inclusion** for the deaf and hard-of-hearing community by enabling more efficient communication using technology. 🚀
+Une plateforme web moderne et accessible permettant de contribuer à la création d'un corpus LSF pour l'entraînement d'IA de reconnaissance gestuelle.
 
-## Table of Contents 📚
+## ✨ Fonctionnalités
 
-- [About the Project](#about-the-project)
-- [How It Works](#how-it-works)
-- [Contribute](#contribute)
-- [Benefits for Contributors](#benefits-for-contributors)
-- [Tech Stack](#tech-stack)
-- [License](#license)
+### 🎯 **Contribution Simplifiée**
+- Interface intuitive en 3 étapes
+- Capture automatique de 10 photos en 10 secondes
+- Feedback visuel en temps réel
+- Support de toutes les lettres de l'alphabet
 
-## About the Project 📖
+### 📱 **Design Responsive**
+- Optimisé mobile-first
+- Interface adaptative (téléphone, tablette, desktop)
+- Navigation tactile fluide
 
-The **LSF Corpus Project** is dedicated to creating a high-quality, **open-source** dataset that will be used to train AI models for recognizing sign language. The project starts by focusing on capturing images of individual letters in LSF, specifically the **dactylology system** (finger-spelling), which is a key component of French Sign Language.
+### ♿ **Accessibilité WCAG 2.1 AA**
+- Structure sémantique complète
+- Support lecteurs d'écran
+- Navigation clavier
+- Contrastes optimisés
+- Messages live pour les actions
 
-This dataset will allow us to develop more accurate and efficient AI models that can recognize signed letters and eventually expand to recognizing full LSF signs, helping bridge the communication gap between hearing and deaf individuals. 🤝
+### 🔐 **Authentification Sécurisée**
+- Connexion email/mot de passe
+- Intégration Google OAuth
+- Sessions sécurisées NextAuth.js
 
-## How It Works 🛠️
+## 🛠️ Stack Technique
 
-The process to contribute is simple and quick! Here’s how you can get involved:
+- **Framework** : Next.js 14 (App Router)
+- **Styling** : Tailwind CSS
+- **Animations** : Framer Motion
+- **Authentification** : NextAuth.js
+- **Base de données** : Supabase
+- **Caméra** : react-webcam
+- **Déploiement** : Vercel
 
-### Step 1: Review the Tutorial 📚
-Before you start, take a moment to read our **tutorial**. It will guide you through how to take clear and accurate photos of LSF letters.
+## 🎨 Composants Principaux
 
-### Step 2: Capture Images 📸
-Once you're ready, sign a letter of the LSF alphabet in front of your webcam. A reference image will appear on your screen, showing you the letter you need to sign. You will have **10 seconds** to capture multiple images, one every second, to ensure high-quality data for the model. ⏱️
+### `TutorialModal`
+Modal interactif expliquant le processus de contribution en 3 étapes avec navigation par points de progression.
 
-### Step 3: Submit Your Contribution 📥
-Your photos will be automatically submitted to enrich the LSF dataset. Each contribution is important for training the AI model and advancing the project. 🌱
+### `RegisterModal`
+Système d'authentification avec onglets connexion/inscription et intégration Google OAuth.
 
-### Step 4: Enjoy Exclusive Benefits 🎁
-The top 3 contributors will receive **exclusive access** to the app once it’s fully developed. Additionally, all contributors will receive **regular updates** via email, keeping you informed about the progress and improvements made to the project. 📧
+### `TakePhoto`
+Interface de capture avec :
+- Sélection de lettre
+- Flux caméra en temps réel
+- Image de référence
+- Timer de capture
+- Indicateur de progression
 
-## Contribute 🤗
+## 🌐 Fonctionnalités d'Accessibilité
 
-You can make a **difference** by contributing to the LSF dataset! Whether you're signing the letters of the alphabet or sharing the project with others, your involvement will help improve the accuracy of AI models and foster greater inclusion for the deaf and hard-of-hearing community. 💡
+- **Navigation clavier** : Tab, Enter, Espace
+- **Lecteurs d'écran** : Labels ARIA, rôles sémantiques
+- **Contrastes** : Respect des ratios WCAG AA
+- **Focus visible** : Indicateurs visuels clairs
+- **Messages live** : Feedback temps réel
 
-To get started, simply sign up on the platform, follow the tutorial, and start capturing your photos. **Every contribution counts!** 🙌
+## 📱 Responsive Design
 
-## Benefits for Contributors 🎉
+| Breakpoint | Taille | Optimisations |
+|------------|--------|---------------|
+| Mobile | < 640px | Interface verticale, boutons tactiles |
+| Tablet | 640px - 1024px | Layout hybride |
+| Desktop | > 1024px | Interface côte à côte |
 
-- **Exclusive access** to the app for the top 3 contributors once it's live.
-- **Updates and progress reports**: Stay informed with regular emails about the development of the project.
-- **Impactful involvement**: Your photos will play a key role in improving AI-based sign language recognition. 💪
+## 🔄 Workflow de Contribution
 
-## Tech Stack 🖥️
+1. **Sélection** : Choisir une lettre dans le dropdown
+2. **Capture** : 10 photos automatiques en 10 secondes
+3. **Upload** : Envoi sécurisé vers la base de données
+4. **Feedback** : Confirmation visuelle de succès
 
-- **Frontend**: Built with **Next.js** ⚡
-- **Styling**: Powered by **Tailwind CSS** 🎨
+## 🎯 Objectifs du Projet
 
-## License 📄
+- **1000 photos** par lettre de l'alphabet
+- **Diversité** des contributeurs pour la robustesse IA
+- **Qualité** des données pour l'entraînement
+- **Accessibilité** pour tous les utilisateurs
 
-This project is **open-source** and distributed under the **MIT License**. You are free to use, modify, and contribute to the project. 🚀
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! 
+
+1. Fork le projet
+2. Créer une branche feature (`git checkout -b feature/amelioration`)
+3. Commit les changements (`git commit -m 'Ajout fonctionnalité'`)
+4. Push vers la branche (`git push origin feature/amelioration`)
+5. Ouvrir une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+## 👨‍💻 Auteur
+
+**Maxime Martin**
+- LinkedIn : [maxime-martin](https://www.linkedin.com/in/maxime-martin-090731aa/)
+- Email : maximemartin510@gmail.com
+
+---
+
+*Ensemble, construisons l'avenir de la communication inclusive* 🤟
