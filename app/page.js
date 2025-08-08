@@ -57,79 +57,89 @@ export default function HomePage() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="min-h-screen flex flex-col items-center justify-center px-4"
+      className="min-h-screen flex flex-col items-center justify-center px-2 sm:px-4"
     >
       {/* Section principale centrée */}
-      <motion.div
+      <section 
         className="text-center max-w-5xl mx-auto"
-        variants={itemVariants}
+        aria-labelledby="main-heading"
       >
-        {/* Titre principal */}
-        <motion.h1 
-          className="text-5xl md:text-7xl font-extrabold mb-12 bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent leading-tight"
-          variants={itemVariants}
-        >
-          Créez le dictionnaire LSF
-        </motion.h1>
-
-        {/* Visuel d'impact amélioré */}
-        <motion.div 
-          className="mb-16 relative"
-          variants={itemVariants}
-        >
-          <div className="flex justify-center items-center gap-4 md:gap-6 opacity-90 mb-12">
-            {[1, 2, 3, 4, 5].map((index) => (
-              <div key={index} className="relative group cursor-pointer">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 rounded-full shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 border-2 border-white/30 flex items-center justify-center">
-                  <div className="w-6 h-6 md:w-8 md:h-8 bg-white/30 rounded-full animate-pulse-soft"></div>
-                </div>
-              </div>
-            ))}
-            <div className="text-3xl md:text-4xl mx-4 text-white/60">🤚</div>
-            {[6, 7, 8, 9, 10].map((index) => (
-              <div key={index} className="relative group cursor-pointer">
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 rounded-full shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 border-2 border-white/30 flex items-center justify-center">
-                  <div className="w-6 h-6 md:w-8 md:h-8 bg-white/30 rounded-full animate-pulse-soft"></div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="text-xl md:text-2xl text-blue-100 font-light mb-12 max-w-2xl mx-auto">
-            Votre geste compte
-          </p>
-        </motion.div>
-
-        {/* Bouton principal d'action amélioré */}
-        <motion.div 
-          className="mb-12"
-          variants={itemVariants}
-        >
-          <button
-            onClick={handleStartContribution}
-            className="bg-white text-indigo-600 font-bold text-xl md:text-2xl px-12 py-5 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 hover:bg-blue-50 border-4 border-white/20"
-          >
-            Commencer
-          </button>
-        </motion.div>
-
-        {/* Lien vers le tutoriel */}
         <motion.div variants={itemVariants}>
-          <button
-            onClick={openTutorialModal}
-            className="text-blue-200 hover:text-white text-lg font-medium transition-all duration-200 hover:underline"
+          {/* Titre principal */}
+          <motion.h1 
+            id="main-heading"
+            className="text-3xl sm:text-5xl md:text-7xl font-extrabold mb-8 sm:mb-12 bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent leading-tight"
+            variants={itemVariants}
           >
-            Comment ça marche ?
-          </button>
+            Créez le dictionnaire LSF
+          </motion.h1>
+
+          {/* Visuel d'impact amélioré */}
+          <motion.div 
+            className="mb-12 sm:mb-16 relative"
+            variants={itemVariants}
+            role="img"
+            aria-label="Représentation visuelle de la langue des signes avec des éléments colorés et une main"
+          >
+            <div className="flex justify-center items-center gap-2 sm:gap-4 md:gap-6 opacity-90 mb-8 sm:mb-12">
+              {[1, 2, 3, 4, 5].map((index) => (
+                <div key={index} className="relative group">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 rounded-full shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 border-2 border-white/30 flex items-center justify-center">
+                    <div className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-white/30 rounded-full animate-pulse-soft"></div>
+                  </div>
+                </div>
+              ))}
+              <div className="text-2xl sm:text-3xl md:text-4xl mx-2 sm:mx-4 text-white" role="img" aria-label="Main en langue des signes">🤚</div>
+              {[6, 7, 8, 9, 10].map((index) => (
+                <div key={index} className="relative group">
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 rounded-full shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 border-2 border-white/30 flex items-center justify-center">
+                    <div className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-white/30 rounded-full animate-pulse-soft"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-lg sm:text-xl md:text-2xl text-blue-100 font-light mb-8 sm:mb-12 max-w-2xl mx-auto">
+              Votre geste compte
+            </p>
+          </motion.div>
+
+          {/* Bouton principal d'action amélioré */}
+          <motion.div 
+            className="mb-8 sm:mb-12"
+            variants={itemVariants}
+          >
+            <button
+              onClick={handleStartContribution}
+              className="bg-white text-indigo-600 font-bold text-lg sm:text-xl md:text-2xl px-8 sm:px-12 py-4 sm:py-5 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 hover:bg-blue-50 border-4 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/50"
+              aria-describedby="main-heading"
+            >
+              Commencer
+            </button>
+          </motion.div>
+
+          {/* Lien vers le tutoriel */}
+          <motion.div variants={itemVariants}>
+            <button
+              onClick={openTutorialModal}
+              className="text-blue-100 hover:text-white text-base sm:text-lg font-medium transition-all duration-200 hover:underline focus:outline-none focus:ring-2 focus:ring-white/50 focus:rounded px-2 py-1"
+              aria-label="Ouvrir le tutoriel pour apprendre comment contribuer"
+            >
+              Comment ça marche ?
+            </button>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </section>
 
       {/* Section des barres de progression */}
-      <motion.section className="text-center py-12 mt-20 w-full max-w-6xl">
-        <h3 className="text-2xl md:text-3xl font-bold text-white mb-8">
+      <motion.section 
+        className="text-center py-8 sm:py-12 mt-12 sm:mt-20 w-full max-w-6xl"
+        aria-labelledby="progress-heading"
+      >
+        <h2 id="progress-heading" className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 sm:mb-8">
           Progression par lettre
-        </h3>
+        </h2>
   
-        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6" role="list" aria-label="Progression des contributions par lettre de l'alphabet">
           {letterCounts
             .sort((a, b) => a.letter.localeCompare(b.letter))
             .slice(0, isExpanded ? letterCounts.length : 10)
@@ -148,6 +158,8 @@ export default function HomePage() {
                 <div
                   key={letter}
                   className="flex flex-col items-center space-y-2 transition-all duration-300 hover:scale-105"
+                  role="listitem"
+                  aria-label={`Lettre ${letter.toUpperCase()}: ${count} photos, ${Math.round(progress)}% de l'objectif atteint`}
                 >
                   <span className="text-lg font-bold text-white">{letter.toUpperCase()}</span>
                   <div className="relative w-14 h-14 flex items-center justify-center">
@@ -174,7 +186,9 @@ export default function HomePage() {
           <div className="mt-10">
             <button
               onClick={handleExpandToggle}
-              className="bg-indigo-600 text-white font-bold py-4 px-10 rounded-full hover:bg-indigo-700 transition-all duration-200 hover:scale-105 shadow-xl border-2 border-white/20"
+              className="bg-indigo-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-10 rounded-full hover:bg-indigo-700 transition-all duration-200 hover:scale-105 shadow-xl border-2 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/50"
+              aria-expanded={isExpanded}
+              aria-controls="progress-list"
             >
               {isExpanded ? `Voir moins` : `Voir toutes les lettres (${letterCounts.length})`}
             </button>

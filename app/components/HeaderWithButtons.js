@@ -26,13 +26,13 @@ export default function HeaderWithButtons() {
 
   return (
     <>
-      <header className="text-white py-4 px-6 relative mb-20">
+      <header className="text-white py-4 px-4 sm:px-6 relative mb-12 sm:mb-20" role="banner">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">
-            <a href="/" className="hover:underline">
+          <div className="text-xl sm:text-2xl font-bold">
+            <a href="/" className="hover:underline focus:outline-none focus:ring-2 focus:ring-white/50 focus:rounded px-2 py-1" aria-label="Retour à l'accueil - Corpus LSF">
             Corpus LSF
             </a>
-          </h1>
+          </div>
           {/* Hamburger Menu */}
           <button
             onClick={toggleMenu}
@@ -55,16 +55,18 @@ export default function HeaderWithButtons() {
             </svg>
           </button>
           {/* Desktop Menu */}
-          <nav className="hidden md:flex space-x-4 items-center">
+          <nav className="hidden md:flex space-x-4 items-center" role="navigation" aria-label="Navigation principale">
             <a
               href="/"
-              className="text-white hover:text-blue-200 font-medium py-2 px-4 transition-colors duration-200"
+              className="text-white hover:text-blue-200 font-medium py-2 px-4 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 focus:rounded"
+              aria-label="Aller à la page d'accueil"
             >
               Accueil
             </a>
             <a
               href="/take-photo"
-              className="bg-white text-indigo-700 font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 text-center"
+              className="bg-white text-indigo-700 font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 text-center hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              aria-label="Aller à la page de capture de photos"
             >
               Prendre des photos
             </a>
@@ -72,7 +74,8 @@ export default function HeaderWithButtons() {
               <>
                 <button
                   onClick={openRegisterModal}
-                  className="bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+                  className="bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  aria-label="Ouvrir le formulaire de connexion ou d'inscription"
                 >
                   Connexion/Inscription
                 </button>
@@ -80,14 +83,16 @@ export default function HeaderWithButtons() {
             ) : (
               <button
                 onClick={() => signOut()}
-                className="bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+                className="bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-white/50"
+                aria-label="Se déconnecter de votre compte"
               >
                 Déconnexion
               </button>
             )}
             <button
               onClick={() => setIsTutorialModalOpen(true)}
-              className="bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+              className="bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-white/50"
+              aria-label="Ouvrir le tutoriel pour apprendre à contribuer"
             >
               Tutoriel
             </button>

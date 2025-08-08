@@ -120,15 +120,17 @@ export default function TakePhoto() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col p-4">
+    <div className="min-h-screen flex flex-col p-2 sm:p-4">
       {/* Messages de feedback */}
       {showSuccess && (
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg z-50 flex items-center"
+          className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-4 sm:px-6 py-3 rounded-lg shadow-xl z-50 flex items-center font-medium"
+          role="alert"
+          aria-live="polite"
         >
-          <span className="mr-2">✓</span>
+          <span className="mr-2" aria-hidden="true">✓</span>
           Photo envoyée !
         </motion.div>
       )}
@@ -137,9 +139,11 @@ export default function TakePhoto() {
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-full shadow-lg z-50 flex items-center"
+          className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 sm:px-6 py-3 rounded-lg shadow-xl z-50 flex items-center font-medium max-w-sm text-center"
+          role="alert"
+          aria-live="assertive"
         >
-          <span className="mr-2">⚠</span>
+          <span className="mr-2" aria-hidden="true">⚠</span>
           {errorMessage}
         </motion.div>
       )}
@@ -159,7 +163,7 @@ export default function TakePhoto() {
       </div>
 
       <div className="text-center mb-6">
-        <p className="text-sm text-gray-300">
+        <p className="text-sm text-gray-200" aria-live="polite" aria-atomic="true">
           {currentStep === 1 && "Choisissez une lettre"}
           {currentStep === 2 && "Capture en cours..."}
           {currentStep === 3 && "Envoi..."}
@@ -167,19 +171,26 @@ export default function TakePhoto() {
       </div>
 
       {/* Interface principale */}
-      <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full">
+      <section className="flex-1 flex flex-col items-center justify-center max-w-7xl mx-auto w-full" aria-labelledby="capture-heading">
+        
+        <h1 id="capture-heading" className="sr-only">Capture d'images pour le corpus LSF</h1>
         
         {/* Sélection de lettre */}
         {currentStep === 1 && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mb-8"
+            className="mb-6 sm:mb-8"
           >
+            <label htmlFor="letter-select" className="sr-only">
+              Sélectionnez une lettre de l'alphabet à signer
+            </label>
             <select
+              id="letter-select"
               value={letter}
               onChange={(e) => setLetter(e.target.value)}
-              className="bg-white text-gray-800 text-2xl font-bold px-8 py-4 rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-300 border-0"
+              className="bg-white text-gray-800 text-lg sm:text-2xl font-bold px-4 sm:px-8 py-3 sm:py-4 rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-300 border-0"
+              aria-describedby="letter-help"
             >
               <option value="">Choisir une lettre</option>
               {[..."abcdefghijklmnopqrstuvwxyz"].map((char) => (
@@ -188,18 +199,24 @@ export default function TakePhoto() {
                 </option>
               ))}
             </select>
+            <p id="letter-help" className="sr-only">
+              Sélectionnez une lettre pour commencer la capture de 10 photos en 10 secondes
+            </p>
           </motion.div>
         )}
 
         {/* Compteur pendant la capture */}
         {uploading && countdown > 0 && (
           <motion.div 
-            className="mb-8 text-center"
+            className="mb-6 sm:mb-8 text-center"
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
+            role="timer"
+            aria-live="assertive"
+            aria-label={`Capture en cours, ${countdown} secondes restantes`}
           >
-            <div className="text-6xl font-bold text-white mb-2">{countdown}</div>
-            <div className="w-32 h-2 bg-white/20 rounded-full mx-auto">
+            <div className="text-4xl sm:text-6xl font-bold text-white mb-2">{countdown}</div>
+            <div className="w-24 sm:w-32 h-2 bg-white/20 rounded-full mx-auto" role="progressbar" aria-valuenow={((10 - countdown) / 10) * 100} aria-valuemin="0" aria-valuemax="100">
               <div 
                 className="h-2 bg-white rounded-full transition-all duration-1000"
                 style={{ width: `${((10 - countdown) / 10) * 100}%` }}
@@ -209,31 +226,32 @@ export default function TakePhoto() {
         )}
 
         {/* Interface caméra */}
-        <div className="flex flex-col lg:flex-row items-center gap-8 mb-8 w-full max-w-7xl">
-          <div className="relative flex-1 max-w-2xl">
+        <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-8 mb-6 sm:mb-8 w-full max-w-7xl">
+          <div className="relative flex-1 max-w-2xl w-full">
             <Webcam
               ref={webcamRef}
               audio={false}
               screenshotFormat="image/jpeg"
-              className="w-full h-[500px] object-cover rounded-2xl shadow-xl border-4 border-white/20"
+              className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-2xl shadow-xl border-4 border-white/20"
+              aria-label="Flux vidéo de votre caméra pour capturer les signes LSF"
             />
-            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-4 py-1 rounded-full text-sm font-medium shadow-lg">
+            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium shadow-lg">
               Votre caméra
             </div>
           </div>
 
           {letter && (
             <motion.div 
-              className="relative flex-1 max-w-2xl"
+              className="relative flex-1 max-w-2xl w-full"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
             >
               <img
                 src={`/letters/${letter}.jpg`}
-                alt={`Lettre ${letter.toUpperCase()}`}
-                className="w-full h-[500px] object-cover rounded-2xl shadow-xl border-4 border-white/20"
+                alt={`Exemple de la lettre ${letter.toUpperCase()} en langue des signes française - position de la main pour former cette lettre`}
+                className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-2xl shadow-xl border-4 border-white/20"
               />
-              <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-4 py-1 rounded-full text-sm font-medium shadow-lg">
+              <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium shadow-lg">
                 Lettre {letter.toUpperCase()}
               </div>
             </motion.div>
@@ -244,7 +262,8 @@ export default function TakePhoto() {
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           <button
             onClick={() => setIsTutorialOpen(true)}
-            className="text-gray-300 hover:text-white underline text-sm transition-colors"
+            className="text-gray-200 hover:text-white underline text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 focus:rounded px-2 py-1"
+            aria-label="Ouvrir le tutoriel pour apprendre à bien capturer les signes"
           >
             Comment ça marche ?
           </button>
@@ -252,12 +271,18 @@ export default function TakePhoto() {
           <button
             onClick={handleCaptureClick}
             disabled={uploading || !letter}
-            className="bg-white text-indigo-600 font-bold text-xl px-12 py-4 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            className="bg-white text-indigo-600 font-bold text-lg sm:text-xl px-8 sm:px-12 py-3 sm:py-4 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-4 focus:ring-white/50"
+            aria-describedby={letter ? undefined : "letter-required"}
           >
             {uploading ? "Capture..." : "Commencer"}
           </button>
+          {!letter && (
+            <p id="letter-required" className="sr-only">
+              Vous devez sélectionner une lettre avant de commencer la capture
+            </p>
+          )}
         </div>
-      </div>
+      </section>
 
       {isTutorialOpen && (
         <TutorialModal
