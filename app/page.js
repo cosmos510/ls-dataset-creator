@@ -171,12 +171,12 @@ export default function HomePage() {
         </div>
   
         {letterCounts.length > 10 && (
-          <div className="mt-8">
+          <div className="mt-10">
             <button
               onClick={handleExpandToggle}
-              className="bg-white/20 text-white font-medium py-3 px-8 rounded-full hover:bg-white/30 transition-all duration-200 hover:scale-105"
+              className="bg-indigo-600 text-white font-bold py-4 px-10 rounded-full hover:bg-indigo-700 transition-all duration-200 hover:scale-105 shadow-xl border-2 border-white/20"
             >
-              {isExpanded ? `Voir moins (${letterCounts.length - 10} cachées)` : `Voir toutes les ${letterCounts.length} lettres`}
+              {isExpanded ? `Voir moins` : `Voir toutes les lettres (${letterCounts.length})`}
             </button>
           </div>
         )}
