@@ -57,6 +57,12 @@ export default function HeaderWithButtons() {
           {/* Desktop Menu */}
           <nav className="hidden md:flex space-x-4 items-center">
             <a
+              href="/"
+              className="text-white hover:text-blue-200 font-medium py-2 px-4 transition-colors duration-200"
+            >
+              Accueil
+            </a>
+            <a
               href="/take-photo"
               className="bg-white text-indigo-700 font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 text-center"
             >
@@ -92,6 +98,13 @@ export default function HeaderWithButtons() {
         {isMenuOpen && (
           <div className="absolute top-full left-0 w-full bg-gray-900 text-white shadow-lg z-50 py-4 px-6 transition-all duration-300">
             <div className="flex flex-col space-y-4">
+              <a
+                href="/"
+                className="text-white hover:text-blue-200 font-medium py-2 px-4 text-center transition-colors duration-200"
+                onClick={toggleMenu}
+              >
+                Accueil
+              </a>
               <a
                 href="/take-photo"
                 className="bg-white text-indigo-700 font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 text-center flex items-center justify-center"
