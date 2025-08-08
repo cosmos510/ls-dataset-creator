@@ -210,12 +210,12 @@ export default function TakePhoto() {
 
         {/* Interface caméra */}
         <div className="flex flex-col lg:flex-row items-center gap-8 mb-8 w-full">
-          <div className="relative flex-1 max-w-lg">
+          <div className="relative flex-1 max-w-xl">
             <Webcam
               ref={webcamRef}
               audio={false}
               screenshotFormat="image/jpeg"
-              className="w-full h-80 object-cover rounded-2xl shadow-xl border-4 border-white/20"
+              className="w-full h-96 object-cover rounded-2xl shadow-xl border-4 border-white/20"
             />
             <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-4 py-1 rounded-full text-sm font-medium shadow-lg">
               Votre caméra
@@ -224,14 +224,14 @@ export default function TakePhoto() {
 
           {letter && (
             <motion.div 
-              className="relative flex-1 max-w-lg"
+              className="relative flex-1 max-w-xl"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
             >
               <img
                 src={`/letters/${letter}.jpg`}
                 alt={`Lettre ${letter.toUpperCase()}`}
-                className="w-full h-80 object-cover rounded-2xl shadow-xl border-4 border-white/20"
+                className="w-full h-96 object-cover rounded-2xl shadow-xl border-4 border-white/20"
               />
               <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-4 py-1 rounded-full text-sm font-medium shadow-lg">
                 Lettre {letter.toUpperCase()}

@@ -77,18 +77,20 @@ export default function HomePage() {
           className="mb-16 relative"
           variants={itemVariants}
         >
-          <div className="grid grid-cols-4 md:grid-cols-8 gap-3 md:gap-4 opacity-90 mb-12">
-            {['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'].map((letter) => (
-              <div key={letter} className="relative group cursor-pointer">
-                <img
-                  src={`/letters/${letter}.jpg`}
-                  alt={`${letter.toUpperCase()}`}
-                  className="w-full h-16 md:h-20 object-cover rounded-xl shadow-lg transform group-hover:scale-110 group-hover:rotate-2 transition-all duration-500 border-2 border-white/20"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-indigo-600/40 to-transparent rounded-xl group-hover:from-indigo-500/60 transition-all duration-300"></div>
-                <span className="absolute bottom-1 right-1 text-white font-bold text-xs md:text-sm drop-shadow-lg">
-                  {letter.toUpperCase()}
-                </span>
+          <div className="flex justify-center items-center gap-4 md:gap-6 opacity-90 mb-12">
+            {[1, 2, 3, 4, 5].map((index) => (
+              <div key={index} className="relative group cursor-pointer">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 rounded-full shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 border-2 border-white/30 flex items-center justify-center">
+                  <div className="w-6 h-6 md:w-8 md:h-8 bg-white/30 rounded-full animate-pulse-soft"></div>
+                </div>
+              </div>
+            ))}
+            <div className="text-3xl md:text-4xl mx-4 text-white/60">🤚</div>
+            {[6, 7, 8, 9, 10].map((index) => (
+              <div key={index} className="relative group cursor-pointer">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 rounded-full shadow-lg transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 border-2 border-white/30 flex items-center justify-center">
+                  <div className="w-6 h-6 md:w-8 md:h-8 bg-white/30 rounded-full animate-pulse-soft"></div>
+                </div>
               </div>
             ))}
           </div>
@@ -127,47 +129,54 @@ export default function HomePage() {
           Progression par lettre
         </h3>
   
-        <div className="flex flex-wrap justify-center gap-6">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
           {letterCounts
-            .sort((a, b) => b.count - a.count)
-            .slice(0, isExpanded ? letterCounts.length : 8)
+            .sort((a, b) => a.letter.localeCompare(b.letter))
+            .slice(0, isExpanded ? letterCounts.length : 10)
             .map(({ letter, count }) => {
               const target = 1000;
               const progress = Math.min((count / target) * 100, 100);
+              
+              const getColor = (progress) => {
+                if (progress >= 80) return '#10b981'; // green
+                if (progress >= 50) return '#3b82f6'; // blue  
+                if (progress >= 25) return '#f59e0b'; // orange
+                return '#ef4444'; // red
+              };
   
               return (
                 <div
                   key={letter}
-                  className="flex flex-col items-center space-y-2"
+                  className="flex flex-col items-center space-y-2 transition-all duration-300 hover:scale-105"
                 >
-                  <span className="text-xl font-bold text-white">{letter.toUpperCase()}</span>
-                  <div className="relative w-16 h-16 flex items-center justify-center">
-                    <div className="absolute w-16 h-16 rounded-full bg-white/20"></div>
+                  <span className="text-lg font-bold text-white">{letter.toUpperCase()}</span>
+                  <div className="relative w-14 h-14 flex items-center justify-center">
+                    <div className="absolute w-14 h-14 rounded-full bg-white/10"></div>
                     <div 
-                      className="absolute w-16 h-16 rounded-full bg-gradient-to-t from-indigo-500 to-blue-400"
+                      className="absolute w-14 h-14 rounded-full"
                       style={{
-                        background: `conic-gradient(from 0deg, #3b82f6 ${progress * 3.6}deg, rgba(255,255,255,0.2) 0deg)`
+                        background: `conic-gradient(from 0deg, ${getColor(progress)} ${progress * 3.6}deg, rgba(255,255,255,0.1) 0deg)`
                       }}
                     ></div>
-                    <div className="absolute w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center">
+                    <div className="absolute w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
                       <span className="text-white font-semibold text-xs">{Math.round(progress)}%</span>
                     </div>
                   </div>
                   <span className="text-xs text-gray-300">
-                    {count} photos
+                    {count}
                   </span>
                 </div>
               );
             })}
         </div>
   
-        {letterCounts.length > 8 && (
+        {letterCounts.length > 10 && (
           <div className="mt-8">
             <button
               onClick={handleExpandToggle}
-              className="bg-white/20 text-white font-medium py-2 px-6 rounded-full hover:bg-white/30 transition-all duration-200"
+              className="bg-white/20 text-white font-medium py-3 px-8 rounded-full hover:bg-white/30 transition-all duration-200 hover:scale-105"
             >
-              {isExpanded ? "Voir moins" : "Voir tout"}
+              {isExpanded ? `Voir moins (${letterCounts.length - 10} cachées)` : `Voir toutes les ${letterCounts.length} lettres`}
             </button>
           </div>
         )}
