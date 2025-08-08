@@ -58,7 +58,7 @@ export default function HeaderWithButtons() {
           <nav className="hidden md:flex space-x-4 items-center" role="navigation" aria-label="Navigation principale">
             <a
               href="/"
-              className="text-white hover:text-blue-200 font-medium py-2 px-4 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/50 focus:rounded"
+              className="bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white/50"
               aria-label="Aller à la page d'accueil"
             >
               Accueil
@@ -105,7 +105,7 @@ export default function HeaderWithButtons() {
             <div className="flex flex-col space-y-4">
               <a
                 href="/"
-                className="text-white hover:text-blue-200 font-medium py-2 px-4 text-center transition-colors duration-200"
+                className="bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white/50 text-center"
                 onClick={toggleMenu}
               >
                 Accueil
