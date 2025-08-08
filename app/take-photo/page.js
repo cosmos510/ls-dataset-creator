@@ -225,6 +225,27 @@ export default function TakePhoto() {
           </motion.div>
         )}
 
+        {/* Timer d'upload */}
+        {uploading && countdown === 0 && (
+          <motion.div 
+            className="mb-6 sm:mb-8 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            role="status"
+            aria-live="polite"
+            aria-label="Envoi des photos en cours"
+          >
+            <div className="flex items-center justify-center mb-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mr-3"></div>
+              <span className="text-xl font-medium text-white">Envoi en cours...</span>
+            </div>
+            <div className="w-32 h-1 bg-white/20 rounded-full mx-auto">
+              <div className="h-1 bg-white rounded-full animate-pulse w-full"></div>
+            </div>
+            <p className="text-sm text-blue-100 mt-2">Veuillez patienter, vos photos sont en cours d'envoi</p>
+          </motion.div>
+        )}
+
         {/* Interface caméra */}
         <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-8 mb-6 sm:mb-8 w-full max-w-7xl">
           <div className="relative flex-1 max-w-2xl w-full">
