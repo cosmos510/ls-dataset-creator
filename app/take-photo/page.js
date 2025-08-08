@@ -249,7 +249,7 @@ export default function TakePhoto() {
               <img
                 src={`/letters/${letter}.jpg`}
                 alt={`Exemple de la lettre ${letter.toUpperCase()} en langue des signes française - position de la main pour former cette lettre`}
-                className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-2xl shadow-xl border-4 border-white/20"
+                className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-contain bg-gray-100 rounded-2xl shadow-xl border-4 border-white/20"
               />
               <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium shadow-lg">
                 Lettre {letter.toUpperCase()}
