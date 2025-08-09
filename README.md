@@ -39,22 +39,6 @@ Une plateforme web moderne et accessible permettant de contribuer à la créatio
 - **Caméra** : react-webcam
 - **Déploiement** : Vercel
 
-## 🎨 Composants Principaux
-
-### `TutorialModal`
-Modal interactif expliquant le processus de contribution en 3 étapes avec navigation par points de progression.
-
-### `RegisterModal`
-Système d'authentification avec onglets connexion/inscription et intégration Google OAuth.
-
-### `TakePhoto`
-Interface de capture avec :
-- Sélection de lettre
-- Flux caméra en temps réel
-- Image de référence
-- Timer de capture
-- Indicateur de progression
-
 ## 🌐 Fonctionnalités d'Accessibilité
 
 - **Navigation clavier** : Tab, Enter, Espace
@@ -62,14 +46,6 @@ Interface de capture avec :
 - **Contrastes** : Respect des ratios WCAG AA
 - **Focus visible** : Indicateurs visuels clairs
 - **Messages live** : Feedback temps réel
-
-## 📱 Responsive Design
-
-| Breakpoint | Taille | Optimisations |
-|------------|--------|---------------|
-| Mobile | < 640px | Interface verticale, boutons tactiles |
-| Tablet | 640px - 1024px | Layout hybride |
-| Desktop | > 1024px | Interface côte à côte |
 
 ## 🔄 Workflow de Contribution
 

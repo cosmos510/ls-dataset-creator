@@ -26,96 +26,85 @@ export default function HeaderWithButtons() {
 
   return (
     <>
-      <header className="text-white py-4 px-4 sm:px-6 relative mb-12 sm:mb-20" role="banner">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="text-xl sm:text-2xl font-bold">
+      <header className="text-white py-4 px-4 relative mb-12 sm:mb-20 w-full" role="banner">
+        <div className="w-full max-w-7xl mx-auto flex justify-between items-center">
+          <div className="text-xl sm:text-2xl font-bold flex-shrink-0">
             <a href="/" className="hover:underline focus:outline-none focus:ring-2 focus:ring-white/50 focus:rounded px-2 py-1" aria-label="Retour à l'accueil - Corpus LSF">
             Corpus LSF
             </a>
           </div>
+          
           {/* Hamburger Menu */}
           <button
             onClick={toggleMenu}
-            className="block md:hidden text-white hover:text-gray-400 focus:outline-none"
+            className="block lg:hidden text-white hover:text-gray-400 focus:outline-none p-2"
             aria-label="Toggle menu"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
           </button>
+          
           {/* Desktop Menu */}
-          <nav className="hidden md:flex space-x-4 items-center" role="navigation" aria-label="Navigation principale">
+          <nav className="hidden lg:flex items-center gap-2" role="navigation" aria-label="Navigation principale">
             <a
               href="/"
-              className="bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="bg-gray-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm whitespace-nowrap"
               aria-label="Aller à la page d'accueil"
             >
               Accueil
             </a>
             <a
               href="/take-photo"
-              className="bg-white text-indigo-700 font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 text-center hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className="bg-white text-indigo-700 font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm whitespace-nowrap"
               aria-label="Aller à la page de capture de photos"
             >
-              Prendre des photos
+              📸 Photos
             </a>
             {!session ? (
-              <>
-                <button
-                  onClick={openRegisterModal}
-                  className="bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-white/50"
-                  aria-label="Ouvrir le formulaire de connexion ou d'inscription"
-                >
-                  Connexion/Inscription
-                </button>
-              </>
+              <button
+                onClick={openRegisterModal}
+                className="bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm whitespace-nowrap"
+                aria-label="Ouvrir le formulaire de connexion ou d'inscription"
+              >
+                👤 Connexion
+              </button>
             ) : (
               <button
                 onClick={() => signOut()}
-                className="bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="bg-red-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm whitespace-nowrap"
                 aria-label="Se déconnecter de votre compte"
               >
-                Déconnexion
+                🚪 Déconnexion
               </button>
             )}
             <button
               onClick={() => setIsTutorialModalOpen(true)}
-              className="bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-white/50"
+              className="bg-purple-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm whitespace-nowrap"
               aria-label="Ouvrir le tutoriel pour apprendre à contribuer"
             >
-              Tutoriel
+              📚 Tutoriel
             </button>
           </nav>
         </div>
 
         {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-gray-900 text-white shadow-lg z-50 py-4 px-6 transition-all duration-300">
-            <div className="flex flex-col space-y-4">
+          <div className="absolute top-full left-0 w-full bg-gray-900/95 backdrop-blur-sm text-white shadow-xl z-50 py-4 px-4 lg:hidden">
+            <div className="flex flex-col space-y-3 max-w-sm mx-auto">
               <a
                 href="/"
-                className="bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white/50 text-center"
+                className="bg-gray-700 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white/50 text-center"
                 onClick={toggleMenu}
               >
-                Accueil
+                🏠 Accueil
               </a>
               <a
                 href="/take-photo"
-                className="bg-white text-indigo-700 font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200 text-center flex items-center justify-center"
+                className="bg-white text-indigo-700 font-medium py-3 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-blue-50 text-center"
                 onClick={toggleMenu}
               >
-                Prendre des photos
+                📸 Prendre des photos
               </a>
               {!session ? (
                 <button
@@ -123,9 +112,9 @@ export default function HeaderWithButtons() {
                     toggleMenu();
                     openRegisterModal();
                   }}
-                  className="bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+                  className="bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-indigo-800"
                 >
-                  Connexion/Inscription
+                  👤 Connexion/Inscription
                 </button>
               ) : (
                 <button
@@ -133,9 +122,9 @@ export default function HeaderWithButtons() {
                     toggleMenu();
                     signOut();
                   }}
-                  className="bg-red-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+                  className="bg-red-700 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-red-800"
                 >
-                  Déconnexion
+                  🚪 Déconnexion
                 </button>
               )}
               <button
@@ -143,9 +132,9 @@ export default function HeaderWithButtons() {
                   toggleMenu();
                   setIsTutorialModalOpen(true);
                 }}
-                className="bg-purple-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-colors duration-200"
+                className="bg-purple-700 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-colors duration-200 hover:bg-purple-800"
               >
-                Tutoriel
+                📚 Tutoriel
               </button>
             </div>
           </div>
