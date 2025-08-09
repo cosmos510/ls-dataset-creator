@@ -68,7 +68,7 @@ export default function HomePage() {
           {/* Titre principal */}
           <motion.h1 
             id="main-heading"
-            className="text-3xl sm:text-5xl md:text-7xl font-extrabold mb-8 sm:mb-12 bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent leading-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold mb-8 sm:mb-12 bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent leading-tight"
             variants={itemVariants}
           >
             Créez le dictionnaire LSF
@@ -98,7 +98,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <p className="text-lg sm:text-xl md:text-2xl text-blue-100 font-light mb-8 sm:mb-12 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-100 font-light mb-8 sm:mb-12 max-w-2xl mx-auto">
               Votre geste compte
             </p>
           </motion.div>
@@ -110,7 +110,7 @@ export default function HomePage() {
           >
             <button
               onClick={handleStartContribution}
-              className="bg-white text-indigo-600 font-bold text-lg sm:text-xl md:text-2xl px-8 sm:px-12 py-4 sm:py-5 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 hover:bg-blue-50 border-4 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/50"
+              className="bg-white text-indigo-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 hover:bg-blue-50 border-4 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/50"
               aria-describedby="main-heading"
             >
               Commencer
@@ -135,7 +135,7 @@ export default function HomePage() {
         className="text-center py-8 sm:py-12 mt-12 sm:mt-20 w-full max-w-6xl"
         aria-labelledby="progress-heading"
       >
-        <h2 id="progress-heading" className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 sm:mb-8">
+        <h2 id="progress-heading" className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 sm:mb-8">
           Progression par lettre
         </h2>
   

@@ -249,13 +249,13 @@ export default function TakePhoto() {
         )}
 
         {/* Interface caméra */}
-        <div className="flex flex-col lg:flex-row items-center gap-4 sm:gap-8 mb-6 sm:mb-8 w-full max-w-7xl">
+        <div className="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8 w-full max-w-7xl">
           <div className="relative flex-1 max-w-2xl w-full">
             <Webcam
               ref={webcamRef}
               audio={false}
               screenshotFormat="image/jpeg"
-              className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-cover rounded-2xl shadow-xl border-4 border-white/20"
+              className="w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[500px] object-cover rounded-2xl shadow-xl border-4 border-white/20"
               aria-label="Flux vidéo de votre caméra pour capturer les signes LSF"
             />
             <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium shadow-lg">
@@ -272,7 +272,7 @@ export default function TakePhoto() {
               <img
                 src={`/letters/${letter}.jpg`}
                 alt={`Exemple de la lettre ${letter.toUpperCase()} en langue des signes française - position de la main pour former cette lettre`}
-                className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-contain bg-gray-100 rounded-2xl shadow-xl border-4 border-white/20"
+                className="w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[500px] object-contain rounded-2xl shadow-xl"
               />
               <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-white text-gray-800 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-medium shadow-lg">
                 Lettre {letter.toUpperCase()}
@@ -294,7 +294,7 @@ export default function TakePhoto() {
           <button
             onClick={handleCaptureClick}
             disabled={uploading || !letter}
-            className="bg-white text-indigo-600 font-bold text-lg sm:text-xl px-8 sm:px-12 py-3 sm:py-4 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-4 focus:ring-white/50"
+            className="bg-white text-indigo-600 font-bold text-base sm:text-lg md:text-xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-4 focus:ring-white/50"
             aria-describedby={letter ? undefined : "letter-required"}
           >
             {uploading ? "Capture..." : "Commencer"}
