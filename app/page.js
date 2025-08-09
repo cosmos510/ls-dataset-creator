@@ -57,18 +57,18 @@ export default function HomePage() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="min-h-screen flex flex-col items-center justify-center px-2 sm:px-4"
+      className="min-h-screen w-full flex flex-col items-center justify-center px-4 md:px-6 lg:px-8"
     >
       {/* Section principale centrée */}
       <section 
-        className="text-center max-w-5xl mx-auto"
+        className="text-center w-full max-w-6xl mx-auto"
         aria-labelledby="main-heading"
       >
         <motion.div variants={itemVariants}>
           {/* Titre principal */}
           <motion.h1 
             id="main-heading"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold mb-8 sm:mb-12 bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent leading-tight"
+            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-8 md:mb-12 bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent leading-tight"
             variants={itemVariants}
           >
             Créez le dictionnaire LSF
@@ -110,7 +110,7 @@ export default function HomePage() {
           >
             <button
               onClick={handleStartContribution}
-              className="bg-white text-indigo-600 font-bold text-base sm:text-lg md:text-xl lg:text-2xl px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 hover:bg-blue-50 border-4 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/50"
+              className="bg-white text-indigo-600 font-bold text-lg md:text-xl lg:text-2xl px-8 md:px-10 lg:px-12 py-4 md:py-5 rounded-full shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 hover:bg-blue-50 border-4 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/50"
               aria-describedby="main-heading"
             >
               Commencer
@@ -132,14 +132,14 @@ export default function HomePage() {
 
       {/* Section des barres de progression */}
       <motion.section 
-        className="text-center py-8 sm:py-12 mt-12 sm:mt-20 w-full max-w-6xl"
+        className="text-center py-8 md:py-12 mt-12 md:mt-20 w-full max-w-7xl"
         aria-labelledby="progress-heading"
       >
-        <h2 id="progress-heading" className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 sm:mb-8">
+        <h2 id="progress-heading" className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 md:mb-8">
           Progression par lettre
         </h2>
   
-        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6" role="list" aria-label="Progression des contributions par lettre de l'alphabet">
+        <div className="flex flex-wrap justify-center gap-4 md:gap-5 lg:gap-6" role="list" aria-label="Progression des contributions par lettre de l'alphabet">
           {letterCounts
             .sort((a, b) => a.letter.localeCompare(b.letter))
             .slice(0, isExpanded ? letterCounts.length : 10)
@@ -186,7 +186,7 @@ export default function HomePage() {
           <div className="mt-10">
             <button
               onClick={handleExpandToggle}
-              className="bg-indigo-600 text-white font-bold py-3 sm:py-4 px-6 sm:px-10 rounded-full hover:bg-indigo-700 transition-all duration-200 hover:scale-105 shadow-xl border-2 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/50"
+              className="bg-indigo-600 text-white font-bold py-4 px-8 md:px-10 rounded-full hover:bg-indigo-700 transition-all duration-200 hover:scale-105 shadow-xl border-2 border-white/20 focus:outline-none focus:ring-4 focus:ring-white/50"
               aria-expanded={isExpanded}
               aria-controls="progress-list"
             >
