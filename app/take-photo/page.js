@@ -168,6 +168,20 @@ export default function TakePhoto() {
           {currentStep === 2 && "Capture en cours..."}
           {currentStep === 3 && "Envoi..."}
         </p>
+        
+        {/* Bouton Comment ça marche */}
+        <div className="mt-4">
+          <button
+            onClick={() => setIsTutorialOpen(true)}
+            className="group bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm border border-white/30 text-white font-medium text-sm px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-indigo-400/30 hover:to-purple-400/30 focus:outline-none focus:ring-4 focus:ring-white/50"
+            aria-label="Ouvrir le tutoriel pour apprendre à bien capturer les signes"
+          >
+            <span className="flex items-center gap-2">
+              <span className="text-sm group-hover:animate-bounce">❓</span>
+              Comment ça marche ?
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Interface principale */}
@@ -189,7 +203,7 @@ export default function TakePhoto() {
               id="letter-select"
               value={letter}
               onChange={(e) => setLetter(e.target.value)}
-              className="bg-white text-gray-800 text-lg sm:text-2xl font-bold px-4 sm:px-8 py-3 sm:py-4 rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-300 border-0"
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-lg sm:text-2xl font-bold px-6 sm:px-10 py-4 sm:py-5 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-white/50 border-2 border-white/20 backdrop-blur-sm"
               aria-describedby="letter-help"
               lang="fr"
               style={{ WebkitAppearance: 'menulist', appearance: 'menulist' }}
@@ -281,19 +295,8 @@ export default function TakePhoto() {
           )}
         </div>
 
-        {/* Boutons d'action */}
-        <div className="flex flex-col sm:flex-row gap-4 items-center">
-          <button
-            onClick={() => setIsTutorialOpen(true)}
-            className="group bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm border border-white/30 text-white font-medium text-sm px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-indigo-400/30 hover:to-purple-400/30 focus:outline-none focus:ring-4 focus:ring-white/50"
-            aria-label="Ouvrir le tutoriel pour apprendre à bien capturer les signes"
-          >
-            <span className="flex items-center gap-2">
-              <span className="text-sm group-hover:animate-bounce">❓</span>
-              Comment ça marche ?
-            </span>
-          </button>
-          
+        {/* Bouton d'action */}
+        <div className="flex justify-center">
           <button
             onClick={handleCaptureClick}
             disabled={uploading || !letter}
