@@ -178,7 +178,7 @@ export default function TakePhoto() {
         <div className="mt-4">
           <button
             onClick={() => setIsTutorialOpen(true)}
-            className="group bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm border border-white/30 text-white font-medium text-sm px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-indigo-400/30 hover:to-purple-400/30 focus:outline-none focus:ring-4 focus:ring-white/50 animate-pulse hover:animate-none"
+            className="group bg-gradient-to-r from-indigo-500/30 to-purple-500/30 backdrop-blur-sm border-2 border-white/50 text-white font-semibold text-sm px-5 py-3 rounded-full shadow-xl hover:shadow-2xl transform hover:scale-110 transition-all duration-300 hover:from-indigo-400/40 hover:to-purple-400/40 focus:outline-none focus:ring-4 focus:ring-white/50 animate-bounce hover:animate-none"
             aria-label="Ouvrir le tutoriel pour apprendre à bien capturer les signes"
           >
             <span className="flex items-center gap-2">
