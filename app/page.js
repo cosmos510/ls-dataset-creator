@@ -121,10 +121,13 @@ export default function HomePage() {
           <motion.div variants={itemVariants}>
             <button
               onClick={openTutorialModal}
-              className="text-blue-100 hover:text-white text-base sm:text-lg font-medium transition-all duration-200 hover:underline focus:outline-none focus:ring-2 focus:ring-white/50 focus:rounded px-2 py-1"
+              className="group relative bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm border border-white/30 text-white font-semibold text-base sm:text-lg px-6 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-indigo-400/30 hover:to-purple-400/30 focus:outline-none focus:ring-4 focus:ring-white/50"
               aria-label="Ouvrir le tutoriel pour apprendre comment contribuer"
             >
-              Comment ça marche ?
+              <span className="flex items-center gap-2">
+                <span className="text-lg group-hover:animate-bounce">❓</span>
+                Comment ça marche ?
+              </span>
             </button>
           </motion.div>
         </motion.div>

@@ -285,10 +285,13 @@ export default function TakePhoto() {
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           <button
             onClick={() => setIsTutorialOpen(true)}
-            className="text-gray-200 hover:text-white underline text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-white/50 focus:rounded px-2 py-1"
+            className="group bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm border border-white/30 text-white font-medium text-sm px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-indigo-400/30 hover:to-purple-400/30 focus:outline-none focus:ring-4 focus:ring-white/50"
             aria-label="Ouvrir le tutoriel pour apprendre à bien capturer les signes"
           >
-            Comment ça marche ?
+            <span className="flex items-center gap-2">
+              <span className="text-sm group-hover:animate-bounce">❓</span>
+              Comment ça marche ?
+            </span>
           </button>
           
           <button
