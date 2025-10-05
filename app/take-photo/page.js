@@ -149,31 +149,36 @@ export default function TakePhoto() {
       )}
 
       {/* Indicateur de progression */}
-      <div className="flex justify-center mb-6 mt-4">
+      <div className="flex justify-center mb-8 mt-6">
         {[1, 2, 3].map((step) => (
           <div key={step} className="flex items-center">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-              currentStep >= step ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-600'
+            <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center text-lg md:text-xl font-bold shadow-lg transition-all duration-300 ${
+              currentStep >= step ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white scale-110' : 'bg-white/20 text-white/60 backdrop-blur-sm'
             }`}>
               {step}
             </div>
-            {step < 3 && <div className={`w-12 h-1 ${currentStep > step ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>}
+            {step < 3 && <div className={`w-16 md:w-20 h-2 rounded-full transition-all duration-500 ${currentStep > step ? 'bg-gradient-to-r from-indigo-600 to-purple-600' : 'bg-white/20'}`}></div>}
           </div>
         ))}
       </div>
 
-      <div className="text-center mb-6">
-        <p className="text-sm text-gray-200" aria-live="polite" aria-atomic="true">
+      <div className="text-center mb-8">
+        <p className="text-lg md:text-xl font-semibold text-white mb-2" aria-live="polite" aria-atomic="true">
           {currentStep === 1 && "Choisissez une lettre"}
           {currentStep === 2 && "Capture en cours..."}
           {currentStep === 3 && "Envoi..."}
+        </p>
+        <p className="text-sm text-blue-100 mb-6">
+          {currentStep === 1 && "Sélectionnez la lettre que vous souhaitez signer"}
+          {currentStep === 2 && "10 photos automatiques en 10 secondes"}
+          {currentStep === 3 && "Vos photos sont en cours d'envoi"}
         </p>
         
         {/* Bouton Comment ça marche */}
         <div className="mt-4">
           <button
             onClick={() => setIsTutorialOpen(true)}
-            className="group bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm border border-white/30 text-white font-medium text-sm px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-indigo-400/30 hover:to-purple-400/30 focus:outline-none focus:ring-4 focus:ring-white/50"
+            className="group bg-gradient-to-r from-indigo-500/20 to-purple-500/20 backdrop-blur-sm border border-white/30 text-white font-medium text-sm px-4 py-2 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-indigo-400/30 hover:to-purple-400/30 focus:outline-none focus:ring-4 focus:ring-white/50 animate-pulse hover:animate-none"
             aria-label="Ouvrir le tutoriel pour apprendre à bien capturer les signes"
           >
             <span className="flex items-center gap-2">
