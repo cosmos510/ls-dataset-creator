@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
-Disallow: /api/ # On cache les routes techniques
-Disallow: /_next/ # On cache les fichiers internes de Next.js
+# Autoriser explicitement les fichiers nécessaires au rendu visuel
+Allow: /_next/static/chunks/*.js
+Allow: /_next/static/css/*.css
+Allow: /_next/static/media/
 
-Sitemap: https://lsf-dataset-creator.up.railway.app/sitemap.xml
+# Bloquer uniquement les routes qui n'ont pas besoin d'être indexées
+Disallow: /api/

@@ -23,6 +23,12 @@ export default function CapturePage() {
 
   // Redirection robuste via window.location pour éviter les erreurs de Chunk
   useEffect(() => {
+    document.title = "Capture LSF - Enregistrement de Signes | Corpus LSF";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Outil de capture photo pour enregistrer vos signes LSF. Interface simple en 3 étapes : sélectionnez une lettre, capturez 10 photos automatiquement, contribuez au dataset IA.');
+    }
+    
     if (status === "unauthenticated") {
       window.location.href = "/";
     }

@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const PrivacyPolicy = () => {
+  useEffect(() => {
+    document.title = "Politique de Confidentialité & Mentions Légales | Corpus LSF";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Mentions légales, politique de confidentialité et protection des données pour le projet Corpus LSF. Informations sur la collecte de landmarks gestuels et l\'utilisation sécurisée de vos données.');
+    }
+  }, []);
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white px-4">
       {/* Header Section */}

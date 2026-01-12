@@ -18,6 +18,14 @@ export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
+    document.title = "Accueil - Corpus LSF | Dictionnaire Collaboratif";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Créez le plus grand dictionnaire LSF collaboratif. Participez à l\'entraînement d\'IA en capturant vos signes LSF.');
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchLetterCounts = async () => {
       try {
         const response = await fetch("/api/photo-count");

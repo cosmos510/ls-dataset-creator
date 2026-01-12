@@ -27,6 +27,7 @@ export const authOptions = {
           const isValid = await bcrypt.compare(password, data.password);
           if (!isValid) return null;
       
+          // Retourne l'ID (UUID) de la base de données
           return { id: data.id, email: data.email };
         } catch (err) {
           console.error('Error during credentials login:', err);
@@ -45,26 +46,29 @@ export const authOptions = {
     signOut: "/",
   },
   session: {
-    jwt: true,
+    strategy: "jwt", // Correction syntaxique (strategy au lieu de jwt: true)
   },
   callbacks: {
     async jwt({ token, user, account }) {
-      if (user) {
-        token.id = user.id || token.id;
-        token.email = user.email || token.email;
+      // 1. Connexion via Credentials (le user est fourni la première fois)
+      if (user && account?.provider === "credentials") {
+        token.id = user.id;
       }
     
-      if (account?.provider === "google") {
-        token.id = account.providerAccountId;
-        token.email = user.email;
-    
-        const { data, error } = await supabase
+      // 2. Connexion via Google
+      if (account?.provider === "google" && user) {
+        // On vérifie si l'utilisateur existe déjà en base avec cet email
+        const { data: existingUser, error: selectError } = await supabase
           .from("users")
-          .select("*")
+          .select("id")
           .eq("email", user.email)
           .single();
     
-        if (error || !data) {
+        if (existingUser) {
+          // L'utilisateur existe, on récupère son UUID de notre table
+          token.id = existingUser.id;
+        } else {
+          // L'utilisateur n'existe pas, on le crée pour obtenir un UUID
           try {
             const { data: newUser, error: insertError } = await supabase
               .from("users")
@@ -72,27 +76,19 @@ export const authOptions = {
                 email: user.email,
                 username: user.name || user.email.split('@')[0],
                 google_id: account.providerAccountId,
-                password: null,
+                password: null, // Pas de mot de passe pour Google
               })
+              .select("id") // On demande à récupérer l'ID généré
               .single();
     
-            console.log('New User Inserted:', newUser);
-            console.error('Insert Error:', insertError);
-    
             if (insertError) {
-              console.error('Error saving Google user to the database:', insertError);
-            } else {
-              if (newUser && newUser.id) {
-                token.id = newUser.id;
-              } else {
-                console.error('User inserted, but id is missing:', newUser);
-              }
+              console.error('Erreur insertion utilisateur Google:', insertError);
+            } else if (newUser) {
+              token.id = newUser.id;
             }
           } catch (err) {
-            console.error('Error saving Google user to the database:', err);
+            console.error('Exception lors de la création user Google:', err);
           }
-        } else {
-          token.id = data.id;
         }
       }
     
@@ -103,7 +99,7 @@ export const authOptions = {
       if (token?.id) {
         session.user = {
           ...session.user,
-          id: token.id,
+          id: token.id, // C'est maintenant TOUJOURS l'UUID de ta base
           email: token.email,
         };
       }
