@@ -48,7 +48,7 @@ const TutorialModal = ({ isOpen, onClose }) => {
 
   const handleStartContribution = () => {
     onClose();
-    router.push('/take-photo');
+    router.push('/capture');
   };
 
   if (!isOpen) return null;
