@@ -77,7 +77,15 @@ export default function RegisterModal({ isOpen, onClose }) {
       setLoading(false);
       clearForm();
       onClose();
-      router.refresh(); // Rafraîchit la session dans le Header
+      
+      // Redirection conditionnelle
+      const redirectPath = localStorage.getItem('redirectAfterLogin');
+      if (redirectPath) {
+        localStorage.removeItem('redirectAfterLogin');
+        router.push(redirectPath);
+      } else {
+        router.refresh(); // Rafraîchit la session dans le Header
+      }
     } catch (err) {
       setError('Une erreur technique est survenue.');
       setLoading(false);
@@ -98,7 +106,15 @@ export default function RegisterModal({ isOpen, onClose }) {
       setLoading(false);
       clearForm(); 
       onClose();
-      router.refresh();
+      
+      // Redirection conditionnelle
+      const redirectPath = localStorage.getItem('redirectAfterLogin');
+      if (redirectPath) {
+        localStorage.removeItem('redirectAfterLogin');
+        router.push(redirectPath);
+      } else {
+        router.refresh();
+      }
     } catch (err) {
       setError('Une erreur s\'est produite.');
       setLoading(false);
@@ -209,7 +225,15 @@ export default function RegisterModal({ isOpen, onClose }) {
         </div>
 
         <button
-          onClick={() => signIn("google")}
+          onClick={() => {
+            const redirectPath = localStorage.getItem('redirectAfterLogin');
+            if (redirectPath) {
+              localStorage.removeItem('redirectAfterLogin');
+              signIn("google", { callbackUrl: redirectPath });
+            } else {
+              signIn("google");
+            }
+          }}
           className="flex items-center justify-center w-full bg-white/5 border border-white/10 py-3 rounded-xl hover:bg-white/10 transition-all text-sm font-medium text-white"
         >
           <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">

@@ -36,16 +36,32 @@ export default function HeaderWithButtons() {
             </Link>
             
             {/* BOUTON COLLECTE MIS EN AVANT */}
-            <Link 
-              href="/capture" 
-              className="btn-collecte pulse-collecte flex items-center gap-2 px-6 py-2.5 rounded-full font-bold text-sm transform hover:scale-105 transition-all"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Contribuer à la collecte
-            </Link>
+            {session ? (
+              <Link 
+                href="/capture" 
+                className="btn-collecte pulse-collecte flex items-center gap-2 px-6 py-2.5 rounded-full font-bold text-sm transform hover:scale-105 transition-all"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Contribuer à la collecte
+              </Link>
+            ) : (
+              <button 
+                onClick={() => {
+                  localStorage.setItem('redirectAfterLogin', '/capture');
+                  setIsRegisterModalOpen(true);
+                }}
+                className="btn-collecte pulse-collecte flex items-center gap-2 px-6 py-2.5 rounded-full font-bold text-sm transform hover:scale-105 transition-all"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Contribuer à la collecte
+              </button>
+            )}
 
             <button
               onClick={() => setIsTutorialModalOpen(true)}
@@ -97,12 +113,25 @@ export default function HeaderWithButtons() {
         {/* Mobile Menu Dropdown */}
         {isMenuOpen && (
           <div className="absolute top-24 left-4 right-4 glass-card p-6 flex flex-col gap-4 lg:hidden border-white/20 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300">
-            <Link href="/capture" className="bg-white text-black font-black py-4 px-4 rounded-xl text-center flex items-center justify-center gap-3" onClick={() => setIsMenuOpen(false)}>
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-              </svg>
-              PRENDRE DES PHOTOS
-            </Link>
+            {session ? (
+              <Link href="/capture" className="bg-white text-black font-black py-4 px-4 rounded-xl text-center flex items-center justify-center gap-3" onClick={() => setIsMenuOpen(false)}>
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                </svg>
+                PRENDRE DES PHOTOS
+              </Link>
+            ) : (
+              <button onClick={() => { 
+                localStorage.setItem('redirectAfterLogin', '/capture');
+                setIsRegisterModalOpen(true); 
+                setIsMenuOpen(false); 
+              }} className="bg-white text-black font-black py-4 px-4 rounded-xl text-center flex items-center justify-center gap-3">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                </svg>
+                PRENDRE DES PHOTOS
+              </button>
+            )}
             <div className="grid grid-cols-2 gap-3 mt-2">
               <Link href="/" className="text-white text-center font-medium p-3 rounded-xl bg-white/5 border border-white/10" onClick={() => setIsMenuOpen(false)}>Accueil</Link>
               <button onClick={() => { setIsTutorialModalOpen(true); setIsMenuOpen(false); }} className="text-white text-center font-medium p-3 rounded-xl bg-white/5 border border-white/10">Tuto</button>

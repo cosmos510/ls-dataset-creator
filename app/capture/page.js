@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Webcam from "react-webcam";
 import { useSession } from "next-auth/react";
-import confetti from "canvas-confetti"; // Import des confettis
+import confetti from "canvas-confetti"; 
 import TutorialModal from "../components/TutorialModal";
 import RegisterModal from "../components/RegisterModal";
 
@@ -35,25 +35,22 @@ export default function CapturePage() {
     return () => clearInterval(timer);
   }, [countdown, uploading, currentStep]);
 
-  // Fonction pour déclencher l'effet de fête
   const triggerConfetti = () => {
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
     const randomInRange = (min, max) => Math.random() * (max - min) + min;
 
     const interval = setInterval(function() {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) return clearInterval(interval);
-
       const particleCount = 50 * (timeLeft / duration);
       confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
       confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
     }, 250);
   };
 
-  const handleCaptureClick = () => {
+  const handleCaptureClick = async () => {
     if (!letter) {
       setErrorMessage("Sélectionnez une lettre avant de commencer.");
       setShowError(true);
@@ -61,10 +58,7 @@ export default function CapturePage() {
       return;
     }
     setCurrentStep(2);
-    captureImages();
-  };
-
-  const captureImages = async () => {
+    
     if (!webcamRef.current) return;
     setUploading(true);
     setCountdown(10);
@@ -84,13 +78,13 @@ export default function CapturePage() {
       });
       
       if (response.ok) {
-        triggerConfetti(); // LANCEMENT DES CONFETTIS 🎉
+        triggerConfetti();
         setShowSuccess(true);
       } else {
-        throw new Error("Erreur lors de l'envoi");
+        throw new Error("Erreur");
       }
     } catch (error) {
-      setErrorMessage("Erreur lors de l'enregistrement. Réessaye.");
+      setErrorMessage("Erreur lors de l'enregistrement.");
       setShowError(true);
       setCurrentStep(1);
     } finally {
@@ -99,63 +93,51 @@ export default function CapturePage() {
     }
   };
 
-  // ÉCRAN DE SUCCÈS (UI LinkedIn Ready)
   if (showSuccess) {
     return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 text-center bg-[#0a0a0a]">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 text-center bg-white/90 backdrop-blur-md">
         <motion.div 
           initial={{ scale: 0.8, opacity: 0 }} 
           animate={{ scale: 1, opacity: 1 }}
-          className="glass-card p-12 border-indigo-500/30 bg-indigo-500/5 rounded-[3rem] max-w-lg"
+          className="p-12 border border-gray-200 bg-white shadow-2xl rounded-[3rem] max-w-lg"
         >
           <div className="text-7xl mb-6">🤟</div>
-          <h2 className="text-4xl font-black text-white uppercase tracking-tighter mb-4">
-            Séquence <span className="text-indigo-500">Validée</span>
+          <h2 className="text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">
+            Séquence <span className="text-indigo-600">Validée</span>
           </h2>
-          <p className="text-white/60 text-lg mb-8">
-            Bravo ! Tes 10 photos pour la lettre <span className="text-white font-bold">{letter.toUpperCase()}</span> ont été ajoutées au corpus.
+          <p className="text-gray-600 text-lg mb-8">
+            Bravo ! Tes 10 photos pour la lettre <span className="text-gray-900 font-bold">{letter.toUpperCase()}</span> ont été ajoutées.
           </p>
           <button 
             onClick={() => { setShowSuccess(false); setCurrentStep(1); setLetter(""); }}
-            className="w-full bg-white text-black py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition-all shadow-xl"
+            className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-black transition-all shadow-xl"
           >
-            Contribuer à nouveau
+            Continuer
           </button>
         </motion.div>
       </div>
     );
   }
 
-  // AFFICHAGE CHARGEMENT
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-indigo-500"></div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen w-full flex flex-col p-4 md:p-8 bg-[#0a0a0a]">
-      {/* Ton interface de capture reste ici... */}
+    <div className="min-h-screen w-full flex flex-col p-4 md:p-8">
       <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col mt-24 md:mt-32">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase">
-            Enregistrement <span className="text-indigo-500">LSF</span>
+          <h1 className="text-3xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase">
+            Enregistrement <span className="text-indigo-600">LSF</span>
           </h1>
-          <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.4em] mt-2">Collecte de données landmarks</p>
+          <p className="text-gray-400 text-[10px] font-bold uppercase tracking-[0.4em] mt-2">Collecte de données pour l'IA</p>
         </div>
 
-        {/* Barre de progression */}
         <div className="flex justify-center gap-2 mb-16">
           {[1, 2, 3].map((s) => (
-            <div key={s} className={`h-1.5 rounded-full transition-all duration-700 ${currentStep >= s ? 'w-24 bg-indigo-500' : 'w-12 bg-white/10'}`} />
+            <div key={s} className={`h-1.5 rounded-full transition-all duration-700 ${currentStep >= s ? 'w-24 bg-indigo-600' : 'w-12 bg-gray-200'}`} />
           ))}
         </div>
 
         <div className="grid lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-6 space-y-8">
-            <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 bg-black/20 shadow-2xl aspect-[4/3] w-full mx-auto">
+            <div className="relative rounded-[2.5rem] overflow-hidden border border-gray-200 bg-black shadow-xl aspect-[4/3] w-full mx-auto">
               <Webcam ref={webcamRef} audio={false} screenshotFormat="image/jpeg" className="w-full h-full object-cover scale-x-[-1]" />
               {uploading && (
                 <div className="absolute top-6 right-6 bg-indigo-600 px-6 py-2 rounded-2xl shadow-xl z-50">
@@ -163,29 +145,48 @@ export default function CapturePage() {
                 </div>
               )}
             </div>
-            <button onClick={() => setIsTutorialOpen(true)} className="w-full py-5 rounded-2xl border-2 border-indigo-500/30 bg-indigo-500/10 text-white font-black uppercase tracking-widest text-sm">
-              Consulter le Protocole
+            
+            {/* BOUTON PROTOCOLE EN NOIR */}
+            <button 
+              onClick={() => setIsTutorialOpen(true)} 
+              className="w-full py-5 rounded-2xl bg-black text-white font-black uppercase tracking-widest text-sm hover:bg-indigo-600 transition-all shadow-xl"
+            >
+              Protocole Technique
             </button>
           </div>
 
           <div className="lg:col-span-6 space-y-8">
-            <div className="glass-card p-8 border-white/10 bg-white/5 rounded-[2.5rem]">
+            {/* CARTE DES LETTRES EN NOIR */}
+            <div className="bg-black p-8 rounded-[2.5rem] shadow-2xl">
               <div className="grid grid-cols-6 gap-3 mb-8">
                 {[..."abcdefghijklmnopqrstuvwxyz"].map((char) => (
-                  <button key={char} onClick={() => setLetter(char)} disabled={uploading} className={`h-14 rounded-xl font-black text-lg transition-all ${letter === char ? 'bg-white text-black scale-105' : 'bg-white/5 text-white/40'}`}>
+                  <button 
+                    key={char} 
+                    onClick={() => setLetter(char)} 
+                    disabled={uploading} 
+                    className={`h-14 rounded-xl font-black text-lg transition-all ${
+                      letter === char 
+                      ? 'bg-indigo-600 text-white scale-110 shadow-[0_0_15px_rgba(79,70,229,0.5)]' 
+                      : 'bg-white/10 text-white/40 hover:text-white hover:bg-white/20'
+                    }`}
+                  >
                     {char.toUpperCase()}
                   </button>
                 ))}
               </div>
-              <div className="aspect-video rounded-3xl bg-black/40 flex items-center justify-center overflow-hidden border border-white/5">
-                {letter ? <motion.img key={letter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} src={`/letters/${letter}.jpg`} alt={letter} className="w-full h-full object-contain p-4" /> : <span className="text-[10px] font-bold text-white/10 uppercase tracking-[0.5em]">Aperçu du signe</span>}
+              <div className="aspect-video rounded-3xl bg-white/5 flex items-center justify-center overflow-hidden border border-white/10">
+                {letter ? (
+                  <motion.img key={letter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} src={`/letters/${letter}.jpg`} alt={letter} className="w-full h-full object-contain p-4" />
+                ) : (
+                  <span className="text-[10px] font-bold text-white/20 uppercase tracking-[0.5em]">Aperçu du signe</span>
+                )}
               </div>
             </div>
 
             <button
               onClick={handleCaptureClick}
               disabled={uploading || !letter}
-              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-6 rounded-[2rem] font-black uppercase tracking-[0.3em] text-sm transition-all disabled:opacity-30"
+              className="w-full bg-indigo-600 hover:bg-black text-white py-6 rounded-[2rem] font-black uppercase tracking-[0.3em] text-sm transition-all disabled:opacity-30 shadow-lg"
             >
               {uploading ? "Capture en cours..." : `Démarrer la capture`}
             </button>
