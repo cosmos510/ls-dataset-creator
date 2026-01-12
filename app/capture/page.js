@@ -140,9 +140,9 @@ export default function CapturePage() {
       {/* Ton interface de capture reste ici... */}
       <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col mt-24 md:mt-32">
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase">
             Enregistrement <span className="text-indigo-500">LSF</span>
-          </h2>
+          </h1>
           <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.4em] mt-2">Collecte de données landmarks</p>
         </div>
 

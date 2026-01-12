@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Capture LSF - Enregistrement de Signes',
-  description: 'Outil de capture photo pour enregistrer vos signes LSF. Interface simple en 3 étapes : sélectionnez une lettre, capturez 10 photos automatiquement, contribuez au dataset IA.'
+  description: 'Capturez vos signes LSF en 3 étapes : sélectionnez une lettre, 10 photos automatiques, contribuez au dataset IA pour la reconnaissance gestuelle.'
 };
 
 export default function CaptureLayout({ children }) {
