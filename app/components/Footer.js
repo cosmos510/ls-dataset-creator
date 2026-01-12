@@ -28,14 +28,15 @@ export default function Footer() {
               <a 
                 href="https://www.webamax.fr" 
                 target="_blank" 
+                rel="noopener"
                 className="text-white font-bold hover:translate-x-1 transition-transform inline-flex items-center gap-2"
               >
                 Webamax.fr
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
               </a>
               <nav className="flex flex-col gap-2 text-indigo-100/60 text-sm">
-                <a href="https://www.webamax.fr/applications-metiers" className="hover:text-white transition-colors">• Applications Métiers</a>
-                <a href="https://www.webamax.fr/audit-securite" className="hover:text-white transition-colors">• Audit & Sécurité IA</a>
+                <a href="https://www.webamax.fr/applications-metiers" target="_blank" rel="noopener" className="hover:text-white transition-colors">• Applications Métiers</a>
+                <a href="https://www.webamax.fr/audit-securite" target="_blank" rel="noopener" className="hover:text-white transition-colors">• Audit & Sécurité IA</a>
               </nav>
             </div>
           </div>

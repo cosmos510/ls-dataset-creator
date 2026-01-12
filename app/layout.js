@@ -18,7 +18,10 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Corpus LSF - Dictionnaire Langue des Signes Française",
+  title: {
+    template: '%s | Corpus LSF',
+    default: 'Corpus LSF - Dictionnaire Langue des Signes Française'
+  },
   description: "Contribuez à la création du plus grand dictionnaire LSF collaboratif pour améliorer l'accessibilité des personnes sourdes et malentendantes. Plateforme développée par Webamax.",
   keywords: "LSF, langue des signes française, dictionnaire, accessibilité, IA, reconnaissance gestuelle, Webamax",
   authors: [{ name: "Webamax", url: "https://www.webamax.fr" }],

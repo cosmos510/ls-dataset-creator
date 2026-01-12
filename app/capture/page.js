@@ -22,7 +22,6 @@ export default function CapturePage() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   useEffect(() => {
-    document.title = "Capture LSF - Enregistrement de Signes | Corpus LSF";
     if (status === "unauthenticated") {
       window.location.href = "/";
     }
