@@ -19,7 +19,25 @@ const geistMono = localFont({
 
 export const metadata = {
   title: "Corpus LSF - Dictionnaire Langue des Signes Française",
-  description: "Contribuez à la création du plus grand dictionnaire LSF collaboratif pour améliorer l'accessibilité des personnes sourdes et malentendantes",
+  description: "Contribuez à la création du plus grand dictionnaire LSF collaboratif pour améliorer l'accessibilité des personnes sourdes et malentendantes. Plateforme développée par Webamax.",
+  keywords: "LSF, langue des signes française, dictionnaire, accessibilité, IA, reconnaissance gestuelle, Webamax",
+  authors: [{ name: "Webamax", url: "https://www.webamax.fr" }],
+  creator: "Webamax",
+  publisher: "Webamax",
+  robots: "index, follow",
+  openGraph: {
+    title: "Corpus LSF - Dictionnaire Langue des Signes Française",
+    description: "Contribuez à la création du plus grand dictionnaire LSF collaboratif pour améliorer l'accessibilité des personnes sourdes et malentendantes. Plateforme développée par Webamax.",
+    url: "https://lsf-dataset-creator.up.railway.app",
+    siteName: "Corpus LSF",
+    type: "website",
+    locale: "fr_FR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Corpus LSF - Dictionnaire Langue des Signes Française",
+    description: "Contribuez à la création du plus grand dictionnaire LSF collaboratif pour améliorer l'accessibilité des personnes sourdes et malentendantes.",
+  },
 };
 
 export default function RootLayout({ children }) {

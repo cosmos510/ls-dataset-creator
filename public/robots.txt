@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/ # On cache les routes techniques
+Disallow: /_next/ # On cache les fichiers internes de Next.js
+
+Sitemap: https://lsf-dataset-creator.up.railway.app/sitemap.xml

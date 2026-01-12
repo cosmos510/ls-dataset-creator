@@ -29,6 +29,74 @@ Une plateforme web moderne et accessible permettant de contribuer à la créatio
 - Intégration Google OAuth
 - Sessions sécurisées NextAuth.js
 
+## 🚀 Installation et Lancement Local
+
+### Prérequis
+- Node.js 18+ 
+- npm ou yarn
+- Compte Supabase (pour la base de données)
+
+### Étapes d'installation
+
+1. **Cloner le repository**
+   ```bash
+   git clone https://github.com/votre-username/ls-dataset-creator.git
+   cd ls-dataset-creator
+   ```
+
+2. **Installer les dépendances**
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
+
+3. **Configuration des variables d'environnement**
+   
+   Créer un fichier `.env.local` à la racine du projet :
+   ```env
+   # Supabase
+   LSF_NEXT_PUBLIC_SUPABASE_URL=votre_supabase_url
+   LSF_NEXT_PUBLIC_SUPABASE_ANON_KEY=votre_supabase_anon_key
+   
+   # NextAuth.js
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=votre_secret_aleatoire
+   
+   # Google OAuth (optionnel)
+   GOOGLE_CLIENT_ID=votre_google_client_id
+   GOOGLE_CLIENT_SECRET=votre_google_client_secret
+   ```
+
+4. **Lancer le serveur de développement**
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
+
+5. **Accéder à l'application**
+   
+   Ouvrir [http://localhost:3000](http://localhost:3000) dans votre navigateur
+
+### Scripts disponibles
+
+- `npm run dev` : Lance le serveur de développement
+- `npm run build` : Build de production
+- `npm run start` : Lance le serveur de production
+- `npm run lint` : Vérification du code
+
+### Dépannage
+
+**Problème avec Safari en local :**
+- Redémarrer le serveur après modification de `next.config.mjs`
+- Vider le cache Safari (Développement > Vider les caches)
+- Utiliser Chrome/Firefox en alternative pour le développement
+
+**CSS non chargé :**
+- Vérifier que `npm install` a été exécuté
+- Redémarrer le serveur de développement
+
 ## 🛠️ Stack Technique
 
 - **Framework** : Next.js 14 (App Router)
