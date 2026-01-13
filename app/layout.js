@@ -31,7 +31,7 @@ export const metadata = {
   openGraph: {
     title: "Corpus LSF - Dictionnaire Langue des Signes Française",
     description: "Contribuez à la création du plus grand dictionnaire LSF collaboratif pour améliorer l'accessibilité des personnes sourdes et malentendantes. Plateforme développée par Webamax.",
-    url: "https://lsf-dataset-creator.up.railway.app",
+    url: "https://ia.lsf.webamax.fr",
     siteName: "Corpus LSF",
     type: "website",
     locale: "fr_FR",

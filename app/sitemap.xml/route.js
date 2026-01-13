@@ -1,5 +1,5 @@
 export async function GET() {
-  const baseUrl = 'https://lsf-dataset-creator.up.railway.app';
+  const baseUrl = 'https://ia.lsf.webamax.fr';
   const currentDate = new Date().toISOString();
   
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
