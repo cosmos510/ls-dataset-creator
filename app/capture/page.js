@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Webcam from "react-webcam";
 import { useSession } from "next-auth/react";
 import confetti from "canvas-confetti"; 
@@ -120,8 +120,9 @@ export default function CapturePage() {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col p-4 md:p-8">
-      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col mt-24 md:mt-32">
+    <div className="min-h-screen w-full flex flex-col p-4 md:p-8 overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full flex-1 flex flex-col mt-24 md:mt-32 max-md:mt-6">
+
         <div className="text-center mb-10">
           <h1 className="text-3xl md:text-5xl font-black text-gray-900 tracking-tighter uppercase">
             Enregistrement <span className="text-indigo-600">LSF</span>
@@ -129,42 +130,54 @@ export default function CapturePage() {
           <p className="text-gray-400 text-[10px] font-bold uppercase tracking-[0.4em] mt-2">Collecte de données pour l'IA</p>
         </div>
 
-        <div className="flex justify-center gap-2 mb-16">
+        <div className="flex justify-center gap-2 mb-16 max-md:mb-4">
           {[1, 2, 3].map((s) => (
             <div key={s} className={`h-1.5 rounded-full transition-all duration-700 ${currentStep >= s ? 'w-24 bg-indigo-600' : 'w-12 bg-gray-200'}`} />
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-6 space-y-8">
-            <div className="relative rounded-[2.5rem] overflow-hidden border border-gray-200 bg-black shadow-xl aspect-[4/3] w-full mx-auto">
-              <Webcam ref={webcamRef} audio={false} screenshotFormat="image/jpeg" className="w-full h-full object-cover scale-x-[-1]" />
+        <div className="grid lg:grid-cols-12 gap-12 items-start max-md:flex max-md:flex-col max-md:gap-6 max-md:overflow-hidden">
+
+          {/* LEFT — WEBCAM + BOUTONS */}
+          <div className="lg:col-span-6 space-y-8 max-md:space-y-4 max-md:w-full">
+
+            {/* === BOUTON MOBILE (au-dessus du feed) === */}
+            <button 
+  onClick={() => setIsTutorialOpen(true)} 
+  className="max-md:flex hidden w-full py-3 rounded-xl bg-black text-white font-black uppercase tracking-widest text-sm hover:bg-indigo-600 transition-all shadow-xl flex justify-center items-center"
+>
+  Protocole Technique
+</button>
+
+            <div className="relative rounded-[2.5rem] overflow-hidden border border-gray-200 bg-black shadow-xl aspect-[4/3] w-full mx-auto max-md:max-h-[45vh] max-md:flex max-md:items-center max-md:justify-center">
+              <Webcam ref={webcamRef} audio={false} screenshotFormat="image/jpeg" className="w-full h-full object-contain md:object-cover scale-x-[-1]" />
               {uploading && (
-                <div className="absolute top-6 right-6 bg-indigo-600 px-6 py-2 rounded-2xl shadow-xl z-50">
-                  <span className="text-2xl font-black text-white">{countdown}s</span>
+                <div className="absolute top-4 right-4 bg-indigo-600 px-4 py-1.5 rounded-xl shadow-xl z-50">
+                  <span className="text-xl font-black text-white">{countdown}s</span>
                 </div>
               )}
             </div>
-            
-            {/* BOUTON PROTOCOLE EN NOIR */}
+
+            {/* === BOUTON DESKTOP (sous webcam) === */}
             <button 
               onClick={() => setIsTutorialOpen(true)} 
-              className="w-full py-5 rounded-2xl bg-black text-white font-black uppercase tracking-widest text-sm hover:bg-indigo-600 transition-all shadow-xl"
+              className="hidden md:flex w-full py-5 rounded-2xl bg-black text-white font-black uppercase tracking-widest text-sm hover:bg-indigo-600 transition-all shadow-xl"
             >
               Protocole Technique
             </button>
           </div>
 
-          <div className="lg:col-span-6 space-y-8">
-            {/* CARTE DES LETTRES EN NOIR */}
-            <div className="bg-black p-8 rounded-[2.5rem] shadow-2xl">
-              <div className="grid grid-cols-6 gap-3 mb-8">
+          {/* RIGHT — LETTRES + PREVIEW */}
+          <div className="lg:col-span-6 space-y-8 max-md:space-y-4 max-md:w-full max-md:max-h-[45vh] max-md:overflow-y-auto max-md:pb-2">
+
+            <div className="bg-black p-8 rounded-[2.5rem] shadow-2xl max-md:p-4">
+              <div className="grid grid-cols-6 gap-3 mb-8 max-md:flex max-md:gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:scrollbar-none">
                 {[..."abcdefghijklmnopqrstuvwxyz"].map((char) => (
                   <button 
                     key={char} 
                     onClick={() => setLetter(char)} 
                     disabled={uploading} 
-                    className={`h-14 rounded-xl font-black text-lg transition-all ${
+                    className={`h-14 w-14 min-w-14 rounded-xl font-black text-lg flex-shrink-0 transition-all ${
                       letter === char 
                       ? 'bg-indigo-600 text-white scale-110 shadow-[0_0_15px_rgba(79,70,229,0.5)]' 
                       : 'bg-white/10 text-white/40 hover:text-white hover:bg-white/20'
@@ -174,7 +187,8 @@ export default function CapturePage() {
                   </button>
                 ))}
               </div>
-              <div className="aspect-video rounded-3xl bg-white/5 flex items-center justify-center overflow-hidden border border-white/10">
+
+              <div className="aspect-video rounded-3xl bg-white/5 flex items-center justify-center overflow-hidden border border-white/10 max-md:max-h-[30vh]">
                 {letter ? (
                   <motion.img key={letter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} src={`/letters/${letter}.jpg`} alt={letter} className="w-full h-full object-contain p-4" />
                 ) : (
