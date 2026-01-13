@@ -102,9 +102,9 @@ export default function CapturePage() {
           className="p-12 border border-gray-200 bg-white shadow-2xl rounded-[3rem] max-w-lg"
         >
           <div className="text-7xl mb-6">🤟</div>
-          <h2 className="text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">
+          <h1 className="text-4xl font-black text-gray-900 uppercase tracking-tighter mb-4">
             Séquence <span className="text-indigo-600">Validée</span>
-          </h2>
+          </h1>
           <p className="text-gray-600 text-lg mb-8">
             Bravo ! Tes 10 photos pour la lettre <span className="text-gray-900 font-bold">{letter.toUpperCase()}</span> ont été ajoutées.
           </p>
@@ -160,17 +160,17 @@ export default function CapturePage() {
 
             {/* === BOUTON DESKTOP (sous webcam) === */}
             <button 
-              onClick={() => setIsTutorialOpen(true)} 
-              className="hidden md:flex w-full py-5 rounded-2xl bg-black text-white font-black uppercase tracking-widest text-sm hover:bg-indigo-600 transition-all shadow-xl"
-            >
-              Protocole Technique
-            </button>
+  onClick={() => setIsTutorialOpen(true)} 
+  className="hidden md:flex w-full py-5 rounded-2xl bg-black text-white font-black uppercase tracking-widest text-sm hover:bg-indigo-600 transition-all shadow-xl flex justify-center items-center"
+>
+  Protocole Technique
+</button>
           </div>
 
           {/* RIGHT — LETTRES + PREVIEW */}
           <div className="lg:col-span-6 space-y-8 max-md:space-y-4 max-md:w-full max-md:max-h-[45vh] max-md:overflow-y-auto max-md:pb-2">
 
-            <div className="bg-black p-8 rounded-[2.5rem] shadow-2xl max-md:p-4">
+            <div className="bg-gray-900 p-8 rounded-[2.5rem] shadow-2xl max-md:p-4">
               <div className="grid grid-cols-6 gap-3 mb-8 max-md:flex max-md:gap-2 max-md:overflow-x-auto max-md:whitespace-nowrap max-md:scrollbar-none">
                 {[..."abcdefghijklmnopqrstuvwxyz"].map((char) => (
                   <button 
@@ -188,11 +188,11 @@ export default function CapturePage() {
                 ))}
               </div>
 
-              <div className="aspect-video rounded-3xl bg-white/5 flex items-center justify-center overflow-hidden border border-white/10 max-md:max-h-[30vh]">
+              <div className="aspect-video rounded-3xl bg-gray-800 flex items-center justify-center overflow-hidden border border-gray-600 max-md:max-h-[30vh]">
                 {letter ? (
                   <motion.img key={letter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} src={`/letters/${letter}.jpg`} alt={letter} className="w-full h-full object-contain p-4" />
                 ) : (
-                  <span className="text-[10px] font-bold text-white/20 uppercase tracking-[0.5em]">Aperçu du signe</span>
+                  <span className="text-xs font-bold text-gray-300 uppercase tracking-[0.3em]">Aperçu du signe</span>
                 )}
               </div>
             </div>
