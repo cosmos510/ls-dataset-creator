@@ -138,10 +138,8 @@ export default function CapturePage() {
 
         <div className="grid lg:grid-cols-12 gap-12 items-start max-md:flex max-md:flex-col max-md:gap-6 max-md:overflow-hidden">
 
-          {/* LEFT — WEBCAM + BOUTONS */}
           <div className="lg:col-span-6 space-y-8 max-md:space-y-4 max-md:w-full">
 
-            {/* === BOUTON MOBILE (au-dessus du feed) === */}
             <button 
   onClick={() => setIsTutorialOpen(true)} 
   className="max-md:flex hidden w-full py-3 rounded-xl bg-black text-white font-black uppercase tracking-widest text-sm hover:bg-indigo-600 transition-all shadow-xl flex justify-center items-center"
@@ -158,7 +156,6 @@ export default function CapturePage() {
               )}
             </div>
 
-            {/* === BOUTON DESKTOP (sous webcam) === */}
             <button 
   onClick={() => setIsTutorialOpen(true)} 
   className="hidden md:flex w-full py-5 rounded-2xl bg-black text-white font-black uppercase tracking-widest text-sm hover:bg-indigo-600 transition-all shadow-xl flex justify-center items-center"
@@ -167,7 +164,6 @@ export default function CapturePage() {
 </button>
           </div>
 
-          {/* RIGHT — LETTRES + PREVIEW */}
           <div className="lg:col-span-6 space-y-8 max-md:space-y-4 max-md:w-full max-md:max-h-[45vh] max-md:overflow-y-auto max-md:pb-2">
 
             <div className="bg-gray-900 p-8 rounded-[2.5rem] shadow-2xl max-md:p-4">

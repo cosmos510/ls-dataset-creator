@@ -45,7 +45,6 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* --- HERO SECTION --- */}
       <motion.section 
         initial="hidden" animate="visible" variants={fadeInUp}
         className="text-center max-w-5xl mx-auto mb-24 mt-20"
@@ -81,7 +80,6 @@ export default function HomePage() {
         </div>
       </motion.section>
 
-      {/* --- DASHBOARD --- */}
       <div className="grid lg:grid-cols-12 gap-8 w-full max-w-7xl mx-auto mb-24">
         
         <motion.section 
@@ -169,7 +167,6 @@ export default function HomePage() {
         </motion.section>
       </div>
 
-      {/* --- INFOS TECHNIQUES --- */}
       <section className="w-full max-w-7xl mx-auto border-t border-white/5 pt-20 mb-24" aria-label="Informations techniques">
         <div className="grid md:grid-cols-3 gap-12">
           <article className="space-y-4 p-6 rounded-2xl bg-white/5">
@@ -181,7 +178,6 @@ export default function HomePage() {
               Le visage n'est jamais enregistré. J'extrais uniquement les coordonnées mathématiques de la main pour entraîner l'IA.
             </p>
           </article>
-          {/* Répéter la structure article pour les autres blocs... */}
           <article className="space-y-4 p-6 rounded-2xl bg-white/5">
             <svg aria-hidden="true" className="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 012-2M5 11V9a2 2 0 01-2-2m0 0V5a2 2 0 012-2h14a2 2 0 012 2v2M5 7h14" />
@@ -203,7 +199,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- FAQ & CONSEILS --- */}
       <section className="w-full max-w-7xl mx-auto mb-24 grid md:grid-cols-2 gap-16 px-6">
         <aside aria-labelledby="faq-title">
           <h2 id="faq-title" className="text-3xl font-bold text-white mb-8">Questions fréquentes</h2>

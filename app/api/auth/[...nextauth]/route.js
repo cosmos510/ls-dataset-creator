@@ -27,7 +27,6 @@ export const authOptions = {
           const isValid = await bcrypt.compare(password, data.password);
           if (!isValid) return null;
       
-          // Retourne l'ID (UUID) de la base de données
           return { id: data.id, email: data.email };
         } catch (err) {
           console.error('Error during credentials login:', err);
@@ -46,18 +45,15 @@ export const authOptions = {
     signOut: "/",
   },
   session: {
-    strategy: "jwt", // Correction syntaxique (strategy au lieu de jwt: true)
+    strategy: "jwt",
   },
   callbacks: {
     async jwt({ token, user, account }) {
-      // 1. Connexion via Credentials (le user est fourni la première fois)
       if (user && account?.provider === "credentials") {
         token.id = user.id;
       }
     
-      // 2. Connexion via Google
       if (account?.provider === "google" && user) {
-        // On vérifie si l'utilisateur existe déjà en base avec cet email
         const { data: existingUser, error: selectError } = await supabase
           .from("users")
           .select("id")
@@ -65,10 +61,8 @@ export const authOptions = {
           .single();
     
         if (existingUser) {
-          // L'utilisateur existe, on récupère son UUID de notre table
           token.id = existingUser.id;
         } else {
-          // L'utilisateur n'existe pas, on le crée pour obtenir un UUID
           try {
             const { data: newUser, error: insertError } = await supabase
               .from("users")
@@ -76,9 +70,9 @@ export const authOptions = {
                 email: user.email,
                 username: user.name || user.email.split('@')[0],
                 google_id: account.providerAccountId,
-                password: null, // Pas de mot de passe pour Google
+                password: null,
               })
-              .select("id") // On demande à récupérer l'ID généré
+              .select("id")
               .single();
     
             if (insertError) {
@@ -99,7 +93,7 @@ export const authOptions = {
       if (token?.id) {
         session.user = {
           ...session.user,
-          id: token.id, // C'est maintenant TOUJOURS l'UUID de ta base
+          id: token.id,
           email: token.email,
         };
       }

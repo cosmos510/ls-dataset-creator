@@ -10,7 +10,6 @@ const CookieConsent = () => {
     try {
       const isCookieAccepted = localStorage.getItem("cookieConsent");
       if (!isCookieAccepted) {
-        // Petit délai pour ne pas agresser l'utilisateur dès le chargement
         const timer = setTimeout(() => setIsVisible(true), 1500);
         return () => clearTimeout(timer);
       }
@@ -38,9 +37,6 @@ const CookieConsent = () => {
           className="fixed bottom-6 left-6 right-6 md:left-auto md:right-8 md:max-w-sm z-[100]"
         >
           <div className="glass-card p-6 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
-            {/* Effet de lueur en arrière-plan */}
-            <div className="absolute -right-10 -top-10 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
-
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-indigo-500/20 rounded-lg">

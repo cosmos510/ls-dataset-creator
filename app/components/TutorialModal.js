@@ -62,7 +62,6 @@ const TutorialModal = ({ isOpen, onClose }) => {
         className="absolute inset-0 bg-black/80 backdrop-blur-md"
       />
 
-      {/* Modal */}
       <motion.div 
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -78,7 +77,6 @@ const TutorialModal = ({ isOpen, onClose }) => {
           </svg>
         </button>
 
-        {/* Indicateur de progression (Dots) */}
         <div className="flex justify-center gap-2 mb-10">
           {steps.map((_, index) => (
             <div
@@ -91,7 +89,6 @@ const TutorialModal = ({ isOpen, onClose }) => {
         </div>
 
         <div className="text-center">
-          {/* Icône animée */}
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
@@ -112,7 +109,6 @@ const TutorialModal = ({ isOpen, onClose }) => {
             {steps[currentStep].content}
           </p>
 
-          {/* Navigation */}
           <div className="flex justify-between items-center pt-6 border-t border-white/10">
             <button
               onClick={prevStep}

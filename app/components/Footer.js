@@ -8,8 +8,6 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          
-          {/* IDENTITÉ */}
           <div className="flex flex-col gap-4">
             <h2 className="text-2xl font-black text-white tracking-tight">
               LSF BASE
@@ -19,7 +17,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* RÉSEAU WEBAMAX */}
           <div className="flex flex-col gap-4">
             <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">
               Expertise Technique
@@ -42,7 +39,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* ACTIONS & INFOS */}
           <div className="flex flex-col md:items-end gap-6">
             <Link 
               href="/privacy" 
@@ -58,7 +54,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* COPYRIGHT */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-300 font-bold text-[10px] tracking-widest uppercase">
           <p>© {new Date().getFullYear()} LSF DATASET</p>
           <div className="flex gap-4">

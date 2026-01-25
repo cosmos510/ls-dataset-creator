@@ -30,7 +30,6 @@ export default function RegisterModal({ isOpen, onClose }) {
     setLoading(false);
   };
 
-  // --- LOGIQUE INSCRIPTION + LOGIN AUTO ---
   const onRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -44,7 +43,6 @@ export default function RegisterModal({ isOpen, onClose }) {
     }
 
     try {
-      // 1. Création du compte
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -59,7 +57,6 @@ export default function RegisterModal({ isOpen, onClose }) {
         return;
       }
 
-      // 2. Connexion automatique immédiate
       const loginRes = await signIn('credentials', {
         redirect: false,
         email,
@@ -67,18 +64,16 @@ export default function RegisterModal({ isOpen, onClose }) {
       });
 
       if (loginRes.error) {
-        setIsLogin(true); // On bascule sur l'onglet login au cas où
+        setIsLogin(true);
         setError("Compte créé ! Veuillez vous connecter manuellement.");
         setLoading(false);
         return;
       }
 
-      // 3. Succès total
       setLoading(false);
       clearForm();
       onClose();
       
-      // Redirection conditionnelle
       const redirectPath = localStorage.getItem('redirectAfterLogin');
       if (redirectPath) {
         localStorage.removeItem('redirectAfterLogin');
@@ -107,7 +102,6 @@ export default function RegisterModal({ isOpen, onClose }) {
       clearForm(); 
       onClose();
       
-      // Redirection conditionnelle
       const redirectPath = localStorage.getItem('redirectAfterLogin');
       if (redirectPath) {
         localStorage.removeItem('redirectAfterLogin');
@@ -134,7 +128,6 @@ export default function RegisterModal({ isOpen, onClose }) {
         className="absolute inset-0 bg-black/80 backdrop-blur-md"
       />
 
-      {/* Modal */}
       <motion.div 
         initial={{ scale: 0.9, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -146,7 +139,6 @@ export default function RegisterModal({ isOpen, onClose }) {
           </svg>
         </button>
         
-        {/* Toggle Login/Register */}
         <div className="flex justify-center mb-10">
           <div className="bg-white/5 p-1 rounded-xl border border-white/10 flex">
             <button

@@ -5,7 +5,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function POST(req) {
   try {
-    // 1. Récupérer la session sécurisée du serveur
     const session = await getServerSession(authOptions);
     
     if (!session || !session.user?.id) {
@@ -13,9 +12,8 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Non autorisé. Veuillez vous reconnecter.' }, { status: 401 });
     }
 
-    // 2. Parser les données de la requête
     const { images, letter } = await req.json();
-    const userId = session.user.id; // L'UUID récupéré de la session NextAuth
+    const userId = session.user.id;
 
     if (!images || !Array.isArray(images) || !letter) {
       return NextResponse.json(
@@ -26,12 +24,9 @@ export async function POST(req) {
 
     const photoRecords = [];
 
-    // 3. Boucle d'upload des images vers le Storage
     for (const base64Image of images) {
-      // Génération d'un nom de fichier unique
       const imageName = `${letter}/${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
 
-      // Conversion du base64 en Buffer pour l'upload
       const { data: storageData, error: storageError } = await supabaseAdmin.storage
         .from('uploads')
         .upload(imageName, Buffer.from(base64Image.split(',')[1], 'base64'), {
@@ -44,7 +39,6 @@ export async function POST(req) {
         return NextResponse.json({ error: 'Échec de l\'upload de l\'image' }, { status: 500 });
       }
 
-      // Préparation de l'objet pour la table 'photo'
       photoRecords.push({
         user_id: userId,
         letter: letter,
@@ -52,8 +46,6 @@ export async function POST(req) {
       });
     }
 
-    // 4. Insertion des métadonnées dans la table 'photo'
-    // On utilise supabaseAdmin pour éviter les erreurs de violation RLS (code 42501)
     const { error: insertError } = await supabaseAdmin
       .from('photo')
       .insert(photoRecords);
@@ -63,7 +55,6 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Erreur lors de l\'enregistrement en base de données' }, { status: 500 });
     }
 
-    // 5. Réponse de succès
     return NextResponse.json({
       success: true,
       message: 'Images et métadonnées enregistrées avec succès !',

@@ -8,10 +8,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables')
 }
 
-// Client public (soumis au RLS)
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// Client admin (contourne le RLS - À utiliser UNIQUEMENT dans les API routes)
 export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey || supabaseAnonKey)
 
 export default supabase

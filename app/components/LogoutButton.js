@@ -12,7 +12,6 @@ export default function LogoutButton() {
     if (session) {
       await signOut({ redirect: false });
 
-      // Nettoyage manuel des cookies pour garantir une déconnexion propre
       document.cookie = 'next-auth.session-token=; Max-Age=0; path=/;';
       document.cookie = 'next-auth.csrf-token=; Max-Age=0; path=/;';
       document.cookie = 'next-auth.callback-url=; Max-Age=0; path=/;';

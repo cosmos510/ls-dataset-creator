@@ -3,19 +3,16 @@ import React from "react";
 const PrivacyPolicy = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white px-4">
-      {/* Header Section */}
       <header className="flex justify-between items-center py-4 px-6">
         <h1 className="text-xl font-bold">Mentions Légales & Politique de Confidentialité</h1>
       </header>
 
-      {/* Main Content */}
       <main className="flex flex-col items-center justify-center text-center flex-grow mb-20">
         <h1 className="text-4xl font-bold tracking-tight mb-6">
           Mentions Légales & Politique de Confidentialité
         </h1>
 
         <div className="max-w-4xl mx-auto text-left">
-          {/* 1. Éditeur et Hébergement */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">1. Éditeur et Hébergement</h2>
             <p className="mb-4">
@@ -31,7 +28,6 @@ const PrivacyPolicy = () => {
             </p>
           </section>
 
-          {/* 2. Données collectées */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">2. Données collectées</h2>
             <h3 className="text-xl font-semibold mb-2">Données collectées pour le projet LSF</h3>
@@ -55,7 +51,6 @@ const PrivacyPolicy = () => {
             <p>Votre e-mail ne sera jamais partagé à des fins commerciales ou publicitaires sans votre consentement explicite.</p>
           </section>
 
-          {/* 3. Finalité de la collecte des données */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">3. Finalité de la collecte des données</h2>
             <ul className="list-disc pl-6">
@@ -64,7 +59,6 @@ const PrivacyPolicy = () => {
             </ul>
           </section>
 
-          {/* 4. Base légale du traitement des données */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">4. Base légale du traitement des données</h2>
             <ul className="list-disc pl-6">
@@ -73,7 +67,6 @@ const PrivacyPolicy = () => {
             </ul>
           </section>
 
-          {/* 5. Conservation des données */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">5. Conservation des données</h2>
             <ul className="list-disc pl-6">
@@ -83,7 +76,6 @@ const PrivacyPolicy = () => {
             </ul>
           </section>
 
-          {/* 6. Partage et protection des données */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">6. Partage et protection des données</h2>
             <h3 className="text-xl font-semibold mb-2">Partage</h3>
@@ -100,7 +92,6 @@ const PrivacyPolicy = () => {
             </ul>
           </section>
 
-          {/* 7. Vos droits en tant qu'utilisateur */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">7. Vos droits en tant qu'utilisateur</h2>
             <ul className="list-disc pl-6">
@@ -112,7 +103,6 @@ const PrivacyPolicy = () => {
             </ul>
           </section>
 
-          {/* 8. Consentement pour les cookies */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">8. Consentement pour les cookies</h2>
             <p>
@@ -120,7 +110,6 @@ const PrivacyPolicy = () => {
             </p>
           </section>
 
-          {/* 9. Utilisation des données pour l'entraînement des modèles IA */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">9. Utilisation des données pour l'entraînement des modèles IA</h2>
             <p className="mb-2">Nous utilisons vos données uniquement pour :</p>
@@ -130,7 +119,6 @@ const PrivacyPolicy = () => {
             </ul>
           </section>
 
-          {/* 10. Modifications de la politique de confidentialité */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">10. Modifications de la politique de confidentialité</h2>
             <p>
@@ -138,7 +126,6 @@ const PrivacyPolicy = () => {
             </p>
           </section>
 
-          {/* 11. À propos de Webamax */}
           <section className="mb-6">
             <h2 className="text-2xl font-semibold mb-2">11. À propos de Webamax</h2>
             <p className="mb-4">

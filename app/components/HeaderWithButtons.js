@@ -22,20 +22,16 @@ export default function HeaderWithButtons() {
       <header className="w-full py-6 px-4 md:px-8 sticky top-0 z-50" role="banner">
         <div className="max-w-7xl mx-auto flex justify-between items-center glass-card px-4 md:px-8 py-3 border-white/10 shadow-2xl">
           
-          {/* LOGO */}
           <div className="flex-1">
             <Link href="/" className="text-xl font-black tracking-tighter bg-gradient-to-r from-white to-white/50 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
               LSF BASE
             </Link>
           </div>
           
-          {/* DESKTOP NAV - CENTERED COLLECTE */}
           <nav className="hidden lg:flex flex-1 justify-center items-center gap-8">
             <Link href="/" className="text-sm font-medium text-white/50 hover:text-white transition-all">
               Accueil
             </Link>
-            
-            {/* BOUTON COLLECTE MIS EN AVANT */}
             {session ? (
               <Link 
                 href="/capture" 
@@ -71,7 +67,6 @@ export default function HeaderWithButtons() {
             </button>
           </nav>
 
-          {/* RIGHT SIDE - ACCOUNT */}
           <div className="flex-1 flex justify-end items-center gap-4">
             {!session ? (
               <button
@@ -93,7 +88,6 @@ export default function HeaderWithButtons() {
               </button>
             )}
 
-            {/* Mobile Hamburger Menu */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden text-white p-2 ml-2"
@@ -110,7 +104,6 @@ export default function HeaderWithButtons() {
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
         {isMenuOpen && (
           <div className="absolute top-24 left-4 right-4 glass-card p-6 flex flex-col gap-4 lg:hidden border-white/20 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300">
             {session ? (
